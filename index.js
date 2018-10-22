@@ -3,7 +3,7 @@
 // Imports dependencies and set up http server
 const express = require("express"),
   messengerWebbhookController = require("./controllers/messengerWebhook"),
-  PORT = process.env.PORT || 1337,
+  PORT = process.env.PORT || 3000,
   app = express();
 
 // Fire controllers
