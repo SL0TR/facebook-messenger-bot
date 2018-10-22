@@ -10,6 +10,6 @@ const express = require("express"),
 messengerWebbhookController(app);
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () =>
-  console.log(`Server is listening on port ${PORT}`)
+app.listen(process.env.PORT || 3000, () =>
+  console.log(`Server is running at https://bot.boomerangbd.com:${PORT}`)
 );
