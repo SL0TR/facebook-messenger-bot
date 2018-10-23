@@ -3,6 +3,8 @@
 // Imports dependencies and set up http server
 const bodyParser = require("body-parser");
 
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
 module.exports = app => {
   //use the body parser
   app.use(bodyParser.json());
@@ -32,7 +34,7 @@ module.exports = app => {
   // Adds support for GET requests to our webhook
   app.get("/webhook", (req, res) => {
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "qTwJgmpk0z";
+    let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
 
     // Parse the query params
     let mode = req.query["hub.mode"];
@@ -52,4 +54,5 @@ module.exports = app => {
       }
     }
   });
+
 };
