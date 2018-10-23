@@ -70,18 +70,24 @@ module.exports = app => {
     }
   });
 
+  // Get Entity
+  function firstEntity(nlp, name) {
+    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
+  }
 
   // Handles messages events
   function handleMessage(sender_psid, received_message) {
     let response;
     
     // Checks if the message contains text
-    if (received_message.text) {    
-      // Create the payload for a basic text message, which
-      // will be added to the body of our request to the Send API
+    const greeting = firstEntity(message.nlp, 'greetings');
+
+    if (greeting && greeting.confidence > 0.8) {
+  
       response = {
-        "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
+        "text": `I have detected your Greeting, fellow human. :3`
       }
+
     } else if (received_message.attachments) {
       // Get the URL of the message attachment
       let attachment_url = received_message.attachments[0].payload.url;
@@ -110,7 +116,11 @@ module.exports = app => {
           }
         }
       }
-    } 
+    } else if (received_message.text) {
+      response = {
+        "text": `This is out of NLP Logic scope, make me smarter, Noob`
+      }
+    }
     
     // Send the response message
     callSendAPI(sender_psid, response);    
