@@ -80,7 +80,7 @@ module.exports = app => {
     let response;
     
     // Checks if the message contains text
-    const greeting = firstEntity(message.nlp, 'greetings');
+    const greeting = firstEntity(received_message.nlp, 'greetings');
 
     if (greeting && greeting.confidence > 0.8) {
   
