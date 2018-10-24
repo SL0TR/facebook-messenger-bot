@@ -23,7 +23,7 @@ module.exports = app => {
         // Gets the body of the webhook event
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
-	console.log(webhook_event.message.nlp.entities);
+	      console.log(webhook_event.message.nlp.entities);
       
         // Get the sender PSID
         let sender_psid = webhook_event.sender.id;
@@ -71,23 +71,23 @@ module.exports = app => {
     }
   });
 
-  // Get Entity
-  function firstEntity(nlp, name) {
-    return nlp && nlp.entities && nlp.entities[name] && nlp.entities[name][0];
-  }
 
   // Handles messages events
   function handleMessage(sender_psid, received_message) {
     let response;
-    
-    // Checks if the message contains text
-    const greeting = firstEntity(received_message.nlp, 'greetings');
 
-    if (greeting && greeting.confidence > 0.8) {
-  
-      response = {
-        "text": `I have detected your Greeting, fellow human. :3`
-      }
+    
+
+    if (received_message.nlp.entities.hasOwnProperty('intent')) {
+      
+        let intent = received_message.nlp.entities.intent[0].value;
+        let confidence = received_message.nlp.entities.intent[0].confidence;
+
+        if (intent === 'greeting' && confidence > 0.8)  {
+          response = {
+            "text": `Hi! I am ${confidence * 100}% confident you have greeted me just now. So, how can I help you?`
+          }
+        }
 
     } else if (received_message.attachments) {
       // Get the URL of the message attachment
