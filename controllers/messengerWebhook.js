@@ -71,23 +71,34 @@ module.exports = app => {
     }
   });
 
+  // Message response according to Wit NLP
+  function intentType(type, conf) {
+
+    if (intent === type && conf > 0.8)  {
+      response = {
+        "text": `Hi! I am ${math.round(conf * 100)}% confident your intent is ${type} :)`
+      }
+    } else {
+      response = {
+        "text": `You have no defined type of intent :(`
+      }
+    }
+
+
+  }
+
 
   // Handles messages events
   function handleMessage(sender_psid, received_message) {
+
     let response;
 
-    
-
     if (received_message.nlp.entities.hasOwnProperty('intent')) {
-      
-        let intent = received_message.nlp.entities.intent[0].value;
-        let confidence = received_message.nlp.entities.intent[0].confidence;
 
-        if (intent === 'greeting' && confidence > 0.8)  {
-          response = {
-            "text": `Hi! I am ${confidence * 100}% confident you have greeted me just now. So, how can I help you?`
-          }
-        }
+      let intent = received_message.nlp.entities.intent[0].value;
+      let confidence = received_message.nlp.entities.intent[0].confidence;
+
+      intentType(intent, confidence);
 
     } else if (received_message.attachments) {
       // Get the URL of the message attachment
