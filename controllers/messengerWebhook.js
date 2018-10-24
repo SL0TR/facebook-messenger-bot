@@ -73,6 +73,7 @@ module.exports = app => {
 
   // Message response according to Wit NLP
   function intentType(type, conf) {
+    let response;
 
     if (conf > 0.8)  {
       response = {
@@ -84,6 +85,7 @@ module.exports = app => {
       }
     }
 
+    return response;
 
   }
 
@@ -98,7 +100,7 @@ module.exports = app => {
       let intent = received_message.nlp.entities.intent[0].value;
       let confidence = received_message.nlp.entities.intent[0].confidence;
 
-      intentType(intent, confidence);
+      response = intentType(intent, confidence);
 
     } else if (received_message.attachments) {
       // Get the URL of the message attachment
