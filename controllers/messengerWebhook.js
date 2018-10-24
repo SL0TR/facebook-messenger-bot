@@ -76,7 +76,7 @@ module.exports = app => {
 
     if (conf > 0.8)  {
       response = {
-        "text": `Hi! I am ${math.round(conf * 100)}% confident your intent is ${type} :)`
+        "text": `Hi! I am ${Math.round(conf * 100)}% confident your intent is ${type} :)`
       }
     } else {
       response = {
