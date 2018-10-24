@@ -74,7 +74,7 @@ module.exports = app => {
   // Message response according to Wit NLP
   function intentType(type, conf) {
 
-    if (intent === type && conf > 0.8)  {
+    if (conf > 0.8)  {
       response = {
         "text": `Hi! I am ${math.round(conf * 100)}% confident your intent is ${type} :)`
       }
