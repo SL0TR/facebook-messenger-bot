@@ -4,7 +4,6 @@
 const bodyParser = require("body-parser"),
   request = require('request');
 
-
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 module.exports = app => {
@@ -166,7 +165,8 @@ module.exports = app => {
       "recipient": {
         "id": sender_psid
       },
-      "message": response
+      "message": response,
+      "sender_action":"typing_on"
     }
   
     // Send the HTTP request to the Messenger Platform
