@@ -165,8 +165,7 @@ module.exports = app => {
       "recipient": {
         "id": sender_psid
       },
-      "message": response,
-      "sender_action":"typing_on"
+      "message": response
     }
   
     // Send the HTTP request to the Messenger Platform
