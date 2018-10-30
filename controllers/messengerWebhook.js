@@ -22,7 +22,6 @@ module.exports = app => {
         // Gets the body of the webhook event
         let webhook_event = entry.messaging[0];
         console.log(webhook_event);
-	      console.log(webhook_event.message.nlp.entities);
       
         // Get the sender PSID
         let sender_psid = webhook_event.sender.id;
@@ -98,7 +97,7 @@ module.exports = app => {
 
       let intent = received_message.nlp.entities.intent[0].value;
       let confidence = received_message.nlp.entities.intent[0].confidence;
-
+      console.log(received_message.nlp.entities)
       response = intentType(intent, confidence);
 
     } else if (received_message.attachments) {
