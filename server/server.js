@@ -1,27 +1,20 @@
 const express = require('express'),
   app = express(),
   err = require('./middleware/err'),
-  messengerWebbhookController = require("../controllers/messengerWebhook");
+  api = require('./api/api');
 
 
-// setup the app middlware
+// Setup the app middlware
 require('./middleware/appMiddleware')(app);
 
 // Fire controller
-messengerWebbhookController(app);
+// messengerWebbhookController(app);
 
 // serve static files
 app.use(express.static('public'));
 
-// Send static site
-app.get('/', (req, res) => {
-  console.log('Request was made from: ' + req.url);
-  res.sendFile(__dirname + '/public/index.html', err => {
-    if (err) {
-      res.status(500).send.err
-    }
-  })
-})
+// setup the api
+app.use(api);
 
 // set up global error handling
 app.use(err());
