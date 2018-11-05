@@ -1,3 +1,4 @@
+"use strict";
 
 // Send static site
 exports.get = (req, res) => {

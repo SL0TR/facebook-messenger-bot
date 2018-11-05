@@ -1,5 +1,7 @@
-var morgan = require('morgan');
-var bodyParser = require('body-parser');
+"use strict";
+
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 module.exports = function(app) {
   app.use(morgan('dev'));

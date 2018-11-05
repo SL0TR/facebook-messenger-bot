@@ -1,6 +1,8 @@
+"use strict";
+
 const axios = require('axios'),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-  
+
 
 // Send response back with post request to facebook api
 exports.callSendAPI = async function (sender_psid, response) {
@@ -40,6 +42,7 @@ exports.callSendAPI = async function (sender_psid, response) {
 
 // Check the type of intent the user sent in message
 exports.intentType = function(type, conf) {
+
   let response;
 
   if (conf > 0.8) {
@@ -120,10 +123,17 @@ exports.handlePostback = function (sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   if (payload === 'yes') {
-    response = { "text": "You're welcome :)" }
+
+    response = { 
+      "text": "You're welcome :)" 
+    }
+
   } else if (payload === 'no') {
+
     response = { "text": "Oops, try sending another image." }
   }
+
   // Send the message to acknowledge the postback
   exports.callSendAPI(sender_psid, response);
+
 }

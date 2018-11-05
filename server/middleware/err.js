@@ -1,4 +1,6 @@
-var logger = require('../util/logger');
+"use strict";
+
+const logger = require('../util/logger');
 
 module.exports = function() {
   return function(err, req, res, next) {

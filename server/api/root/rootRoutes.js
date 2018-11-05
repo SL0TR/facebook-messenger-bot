@@ -1,5 +1,7 @@
-var router = require('express').Router();
-var controller = require('./rootController');
+"use strict";
+
+const router = require('express').Router();
+const controller = require('./rootController');
 
 
 router.route('/')
