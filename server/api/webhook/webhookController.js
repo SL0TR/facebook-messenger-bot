@@ -1,7 +1,6 @@
 "use strict";
 
-const helper = require('./webhookHelpers'),
-  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const helper = require('./webhookHelpers');
 
 
 // Creates the post request endpoint for our webhook

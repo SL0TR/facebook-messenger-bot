@@ -1,4 +1,5 @@
-const axios = require('axios');
+const axios = require('axios'),
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
   
 
 // Send response back with post request to facebook api
