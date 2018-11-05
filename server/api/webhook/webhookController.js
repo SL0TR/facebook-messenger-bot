@@ -1,11 +1,11 @@
 "use strict";
 
-const request = require('request'),
-  handler = require('./webhookHelpers');
+const axios = require('axios'),
+  helper = require('./webhookHelpers');
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-//use the body parser
+
 // Creates the endpoint for our webhook
 exports.post = (req, res) => {
   let body = req.body;
@@ -65,24 +65,6 @@ exports.get = (req, res) => {
   }
 };
 
-// Message response according to Wit NLP
-// function intentType(type, conf) {
-//   let response;
-
-//   if (conf > 0.8) {
-//     response = {
-//       "text": `Hi! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
-//     }
-//   } else {
-//     response = {
-//       "text": `You have no defined type of intent :(`
-//     }
-//   }
-
-//   return response;
-
-// }
-
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -94,7 +76,7 @@ function handleMessage(sender_psid, received_message) {
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
     console.log(received_message.nlp.entities)
-    response = handler.intentType(intent, confidence);
+    response = helper.intentType(intent, confidence);
 
   } else if (received_message.attachments) {
     // Get the URL of the message attachment
@@ -154,8 +136,31 @@ function handlePostback(sender_psid, received_postback) {
 
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  // Construct the message body
+// function callSendAPI(sender_psid, response) {
+//   // Construct the message body
+//   let request_body = {
+//     "recipient": {
+//       "id": sender_psid
+//     },
+//     "message": response
+//   }
+
+//   // Send the HTTP request to the Messenger Platform
+//   request({
+//     "uri": "https://graph.facebook.com/v2.6/me/messages",
+//     "qs": { "access_token": PAGE_ACCESS_TOKEN },
+//     "method": "POST",
+//     "json": request_body
+//   }, (err, res, body) => {
+//     if (!err) {
+//       console.log('message sent!')
+//     } else {
+//       console.error("Unable to send message:" + err);
+//     }
+//   });
+// }
+
+async function callSendAPI (sender_psid, response) {
   let request_body = {
     "recipient": {
       "id": sender_psid
@@ -163,18 +168,19 @@ function callSendAPI(sender_psid, response) {
     "message": response
   }
 
-  // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": PAGE_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('message sent!')
-    } else {
-      console.error("Unable to send message:" + err);
-    }
-  }); 
+  let url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN
+
+  // const config = {
+  //   headers: { 
+  //     "Content-Type": "application/json"
+  //   }
+  // }
+
+  try {
+    let { data } = await axios.post(url, request_body)
+  } catch(e) {
+    console.log(e)
+  }
+    
 }
 
