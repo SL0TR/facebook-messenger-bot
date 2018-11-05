@@ -161,6 +161,7 @@ function handlePostback(sender_psid, received_postback) {
 // }
 
 async function callSendAPI (sender_psid, response) {
+
   let request_body = {
     "recipient": {
       "id": sender_psid
@@ -168,19 +169,31 @@ async function callSendAPI (sender_psid, response) {
     "message": response
   }
 
+  let senderAction = {
+    loader: {
+      "recipient": {
+        "id": sender_psid
+      },
+      "sender_action":"typing_on"
+    }
+  }
+
   let url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN
 
-  // const config = {
-  //   headers: { 
-  //     "Content-Type": "application/json"
-  //   }
-  // }
-
   try {
-    let { data } = await axios.post(url, request_body)
+    let { data } = await axios.post(url, senderAction.loader)
+    console.log(data)
   } catch(e) {
     console.log(e)
   }
-    
+
+  try {
+    let { data } = await axios.post(url, request_body)
+    console.log(data)
+  } catch(e) {
+    console.log(e)
+  }
+
+
 }
 
