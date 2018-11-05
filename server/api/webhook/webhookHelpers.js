@@ -137,3 +137,16 @@ exports.handlePostback = function (sender_psid, received_postback) {
   exports.callSendAPI(sender_psid, response);
 
 }
+
+exports.getUserInfo = async function (psid) {
+  // Send the HTTP request to the Messenger Platform
+  let url = "https://graph.facebook.com/" + psid + "?fields=first_name,last_name,timezone,gender" + "&access_token=" + PAGE_ACCESS_TOKEN;
+
+  try { 
+    let data = await axios.get(url)
+    console.dir(data, { depth: null })
+  } catch(e) {
+    console.log(e)
+  }
+  
+}
