@@ -143,7 +143,7 @@ exports.getUserInfo = async function (psid) {
   let url = "https://graph.facebook.com/" + psid + "?fields=first_name,last_name,timezone,gender" + "&access_token=" + PAGE_ACCESS_TOKEN;
 
   try { 
-    let data = await axios.get(url)
+    let { data } = await axios.get(url)
     return data
   } catch(e) {
     console.log(e)
