@@ -41,17 +41,17 @@ exports.callSendAPI = async function (sender_psid, response) {
 
 
 // Check the type of intent the user sent in message
-exports.intentType = function(type, conf) {
+exports.intentType = function(type, conf, uInfo) {
 
   let response;
 
-  if (conf > 0.8) {
+  if (conf > 0.5) {
     response = {
-      "text": `Hi! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+      "text": `Hi ${uInfo.first_name}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
     }
   } else {
     response = {
-      "text": `You have no defined type of intent :(`
+      "text": `Sorry ${uInfo.first_name}, You have no defined type of intent :(`
     }
   }
 
@@ -61,7 +61,7 @@ exports.intentType = function(type, conf) {
 
 
 // Handles messages events
-exports.handleMessage = function (sender_psid, received_message) {
+exports.handleMessage = function (sender_psid, received_message, user_info) {
 
   let response;
 
@@ -100,7 +100,7 @@ exports.handleMessage = function (sender_psid, received_message) {
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
 
-    response = exports.intentType(intent, confidence);
+    response = exports.intentType(intent, confidence, user_info);
 
   } else if (received_message.hasOwnProperty('text')) {
     response = {
@@ -144,7 +144,7 @@ exports.getUserInfo = async function (psid) {
 
   try { 
     let data = await axios.get(url)
-    console.dir(data, { depth: null })
+    return data
   } catch(e) {
     console.log(e)
   }
