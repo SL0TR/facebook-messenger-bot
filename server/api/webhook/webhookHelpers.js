@@ -92,7 +92,7 @@ exports.handleMessage = function (sender_psid, received_message) {
         }
       }
     }
-  } else if (received_message.hasOwnProperty('nlp') || received_message.nlp.entities.hasOwnProperty('intent')) {
+  } else if (received_message.nlp.entities.hasOwnProperty('intent')) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
