@@ -62,6 +62,8 @@ exports.handleMessage = function (sender_psid, received_message) {
 
   let response;
 
+  console.dir(received_message, { depth: null })
+
    if (received_message.hasOwnProperty('attachments')) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
@@ -98,8 +100,7 @@ exports.handleMessage = function (sender_psid, received_message) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
-    console.dir(received_message, { depth: null })
-    
+
     response = exports.intentType(intent, confidence);
 
   }
