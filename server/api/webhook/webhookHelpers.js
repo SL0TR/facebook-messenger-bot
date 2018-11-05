@@ -62,15 +62,7 @@ exports.handleMessage = function (sender_psid, received_message) {
 
   let response;
 
-  if (received_message.nlp.entities.hasOwnProperty('intent')) {
-
-    let intent = received_message.nlp.entities.intent[0].value;
-    let confidence = received_message.nlp.entities.intent[0].confidence;
-    console.log(received_message.nlp.entities)
-
-    response = exports.intentType(intent, confidence);
-
-  } else if (received_message.attachments) {
+   if (received_message.hasOwnProperty('attachments')) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
     response = {
@@ -98,12 +90,20 @@ exports.handleMessage = function (sender_psid, received_message) {
         }
       }
     }
-  } else if (received_message.text) {
+  } else if (received_message.hasOwnProperty('text')) {
     response = {
       "text": `This is out of NLP Logic scope, make me smarter, Noob`
     }
+  } else if (received_message.hasOwnProperty('nlp') || received_message.nlp.entities.hasOwnProperty('intent')) {
+
+    let intent = received_message.nlp.entities.intent[0].value;
+    let confidence = received_message.nlp.entities.intent[0].confidence;
+    console.dir(received_message, { depth: null })
+    
+    response = exports.intentType(intent, confidence);
+
   }
-  
+
   // Send the response message
   exports.callSendAPI(sender_psid, response)
 
