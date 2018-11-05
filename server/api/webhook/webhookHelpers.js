@@ -92,10 +92,6 @@ exports.handleMessage = function (sender_psid, received_message) {
         }
       }
     }
-  } else if (received_message.hasOwnProperty('text')) {
-    response = {
-      "text": `This is out of NLP Logic scope, make me smarter, Noob`
-    }
   } else if (received_message.hasOwnProperty('nlp') || received_message.nlp.entities.hasOwnProperty('intent')) {
 
     let intent = received_message.nlp.entities.intent[0].value;
@@ -103,6 +99,10 @@ exports.handleMessage = function (sender_psid, received_message) {
 
     response = exports.intentType(intent, confidence);
 
+  } else if (received_message.hasOwnProperty('text')) {
+    response = {
+      "text": `This is out of NLP Logic scope, make me smarter, Noob`
+    }
   }
 
   // Send the response message
