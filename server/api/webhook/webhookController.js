@@ -67,7 +67,7 @@ exports.get = (req, res) => {
 
 
 // Handles messages events
-function handleMessage(sender_psid, received_message) {
+const handleMessage = (sender_psid, received_message) => {
 
   let response;
 
@@ -118,7 +118,7 @@ function handleMessage(sender_psid, received_message) {
 
 
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+const handlePostback = (sender_psid, received_postback) => {
   let response;
   
   // Get the payload for the postback
@@ -134,33 +134,7 @@ function handlePostback(sender_psid, received_postback) {
   callSendAPI(sender_psid, response);
 }
 
-
-// Sends response messages via the Send API
-// function callSendAPI(sender_psid, response) {
-//   // Construct the message body
-//   let request_body = {
-//     "recipient": {
-//       "id": sender_psid
-//     },
-//     "message": response
-//   }
-
-//   // Send the HTTP request to the Messenger Platform
-//   request({
-//     "uri": "https://graph.facebook.com/v2.6/me/messages",
-//     "qs": { "access_token": PAGE_ACCESS_TOKEN },
-//     "method": "POST",
-//     "json": request_body
-//   }, (err, res, body) => {
-//     if (!err) {
-//       console.log('message sent!')
-//     } else {
-//       console.error("Unable to send message:" + err);
-//     }
-//   });
-// }
-
-async function callSendAPI (sender_psid, response) {
+const callSendAPI  = async (sender_psid, response) => {
 
   let request_body = {
     "recipient": {
@@ -179,21 +153,18 @@ async function callSendAPI (sender_psid, response) {
   }
 
   let url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN
-	
+
   try {
-    let { data } = await axios.post(url, senderAction.loader)
-    console.log(data)
+    await axios.post(url, senderAction.loader)
   } catch(e) {
     console.log(e)
   }
 
   try {
-    let { data } = await axios.post(url, request_body)
-    console.log(data)
+    await axios.post(url, request_body)
   } catch(e) {
     console.log(e)
   }
-
 
 }
 
