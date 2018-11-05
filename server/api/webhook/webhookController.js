@@ -1,12 +1,10 @@
 "use strict";
 
-const axios = require('axios'),
-  helper = require('./webhookHelpers');
-
-const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const helper = require('./webhookHelpers'),
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 
-// Creates the endpoint for our webhook
+// Creates the post request endpoint for our webhook
 exports.post = (req, res) => {
   let body = req.body;
 
@@ -26,9 +24,9 @@ exports.post = (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        handleMessage(sender_psid, webhook_event.message);        
+        helper.handleMessage(sender_psid, webhook_event.message);        
       } else if (webhook_event.postback) {
-        handlePostback(sender_psid, webhook_event.postback);
+        helper.handlePostback(sender_psid, webhook_event.postback);
       }
 
     });
@@ -41,7 +39,9 @@ exports.post = (req, res) => {
   }
 };
 
-// Adds support for GET requests to our webhook
+
+
+// Recieve GET request in out api gateway
 exports.get = (req, res) => {
   // Your verify token. Should be a random string.
   let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
@@ -64,107 +64,4 @@ exports.get = (req, res) => {
     }
   }
 };
-
-
-// Handles messages events
-const handleMessage = (sender_psid, received_message) => {
-
-  let response;
-
-  if (received_message.nlp.entities.hasOwnProperty('intent')) {
-
-    let intent = received_message.nlp.entities.intent[0].value;
-    let confidence = received_message.nlp.entities.intent[0].confidence;
-    console.log(received_message.nlp.entities)
-    response = helper.intentType(intent, confidence);
-
-  } else if (received_message.attachments) {
-    // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Le tek yo emej",
-            "subtitle": "Tap dat button to answer",
-            "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ],
-          }]
-        }
-      }
-    }
-  } else if (received_message.text) {
-    response = {
-      "text": `This is out of NLP Logic scope, make me smarter, Noob`
-    }
-  }
-  
-  // Send the response message
-  callSendAPI(sender_psid, response);    
-}
-
-
-// Handles messaging_postbacks events
-const handlePostback = (sender_psid, received_postback) => {
-  let response;
-  
-  // Get the payload for the postback
-  let payload = received_postback.payload;
-
-  // Set the response based on the postback payload
-  if (payload === 'yes') {
-    response = { "text": "You're welcome :)" }
-  } else if (payload === 'no') {
-    response = { "text": "Oops, try sending another image." }
-  }
-  // Send the message to acknowledge the postback
-  callSendAPI(sender_psid, response);
-}
-
-const callSendAPI  = async (sender_psid, response) => {
-
-  let request_body = {
-    "recipient": {
-      "id": sender_psid
-    },
-    "message": response
-  }
-
-  let senderAction = {
-    loader: {
-      "recipient": {
-        "id": sender_psid
-      },
-      "sender_action":"typing_on"
-    }
-  }
-
-  let url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN
-
-  try {
-    await axios.post(url, senderAction.loader)
-  } catch(e) {
-    console.log(e)
-  }
-
-  try {
-    await axios.post(url, request_body)
-  } catch(e) {
-    console.log(e)
-  }
-
-}
 
