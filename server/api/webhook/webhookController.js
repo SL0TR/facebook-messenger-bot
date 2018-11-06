@@ -19,8 +19,9 @@ exports.post = (req, res) => {
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
       // console.log('Sender PSID: ' + sender_psid);
+      let userInfo;
       (async() => {
-        let userInfo = await helper.getUserInfo(sender_psid);
+        userInfo = await helper.getUserInfo(sender_psid);
         console.dir(userInfo, null, true)
       })();
 
