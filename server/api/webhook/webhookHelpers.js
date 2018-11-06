@@ -44,7 +44,7 @@ exports.callSendAPI = async function (sender_psid, response) {
 exports.intentType = function(type, conf, uInfo) {
 
   let response;
-  
+  console.dir(uInfo, null, true)
 
   if (uInfo) {
     if (conf > 0.5) {
@@ -113,7 +113,7 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
-
+    console.dir(user_info, null, true)
     response = exports.intentType(intent, confidence, user_info);
 
   } else if (received_message.hasOwnProperty('text')) {
