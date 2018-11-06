@@ -19,9 +19,10 @@ exports.post = (req, res) => {
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;
       // console.log('Sender PSID: ' + sender_psid);
-
-      let userInfo = helper.getUserInfo(sender_psid);
-      console.dir(userInfo, null, true)
+      (async() => {
+        let userInfo = await helper.getUserInfo(sender_psid);
+        console.dir(userInfo, null, true)
+      })();
 
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function

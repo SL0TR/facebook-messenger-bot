@@ -47,11 +47,11 @@ exports.intentType = function(type, conf, uInfo) {
 
   if (conf > 0.5) {
     response = {
-      "text": `Hi ${uInfo.first_name}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+      "text": `Hi  ${ uinfo ? uInfo.first_name : 'no one'}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
     }
   } else {
     response = {
-      "text": `Sorry ${uInfo.first_name}, You have no defined type of intent :(`
+      "text": `Sorry ${ uinfo ? uInfo.first_name : 'no one'}, You have no defined type of intent :(`
     }
   }
 
