@@ -44,16 +44,30 @@ exports.callSendAPI = async function (sender_psid, response) {
 exports.intentType = function(type, conf, uInfo) {
 
   let response;
+  
 
-  if (conf > 0.5) {
-    response = {
-      "text": `Hi  ${ uinfo ? uInfo.first_name : 'no one'}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+  if (uInfo) {
+    if (conf > 0.5) {
+      response = {
+        "text": `Hi  ${uInfo.first_name}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+      }
+    } else {
+      response = {
+        "text": `Sorry ${uInfo.first_name}!, Couldn't detect an intent :(`
+      }
     }
   } else {
-    response = {
-      "text": `Sorry ${ uinfo ? uInfo.first_name : 'no one'}, You have no defined type of intent :(`
+    if (conf > 0.5) {
+      response = {
+        "text": `Hi, confident that your intent type is '${type}' :)`
+      }
+    } else {
+      response = {
+        "text": `Sorry, Couldn't detect an intent :(`
+      }
     }
   }
+
 
   return response;
 
