@@ -44,16 +44,15 @@ exports.callSendAPI = async function (sender_psid, response) {
 exports.intentType = function(type, conf, uInfo) {
 
   let response;
-  console.dir(uInfo, null, true)
 
   if (uInfo) {
     if (conf > 0.5) {
       response = {
-        "text": `Hi  ${uInfo.first_name}! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+        "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
       }
     } else {
       response = {
-        "text": `Sorry ${uInfo.first_name}!, Couldn't detect an intent :(`
+        "text": `Sorry, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }!, Couldn't detect an intent :(`
       }
     }
   } else {
@@ -113,7 +112,6 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
-    console.dir(user_info, null, true)
     response = exports.intentType(intent, confidence, user_info);
 
   } else if (received_message.hasOwnProperty('text')) {
