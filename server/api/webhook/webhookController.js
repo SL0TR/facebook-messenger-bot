@@ -31,9 +31,8 @@ exports.post = (req, res) => {
           handler.callSendAPI(sender_psid, immediateResponse)
 
           // send nlp response after certain time(minutes)
-          const time= 1;
-
-          const delay = time * 60 * 1000;
+          const minutes = 2;
+          const delay = minutes * 60 * 1000;
 
           setTimeout(function() {
 

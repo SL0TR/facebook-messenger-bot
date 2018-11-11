@@ -9,12 +9,12 @@ exports.intentType = function(type, conf, uInfo) {
   if (uInfo) {
     if (conf > 0.5) {
       response = {
-        "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
+        "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! Thank you for messaging us. How can we assist you?`
       }
       
     } else {
       response = {
-        "text": `Sorry, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }!, Couldn't detect an intent :(`
+        "text": ` I'm Sorry ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }, I didn't get that, can you rephrase?`
       }
     }
   } else {
