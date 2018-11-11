@@ -30,13 +30,22 @@ exports.post = (req, res) => {
 
           handler.callSendAPI(sender_psid, immediateResponse)
 
-          // send nlp response after 2 min
-          setInterval(function(){
-            console.log('NLP FIRED!')
+          // send nlp response after certain time(minutes)
+          const time= 1;
+
+          const delay = time * 60 * 1000;
+
+          setTimeout(function() {
+
+            //console.log('NLP FIRED!')
             handler.handleMessage(sender_psid, webhook_event.message, userInfo);
-          }, 3600);
+
+          }, delay);
 
         } else if (webhook_event.postback) {
+
+          // Check if the event is a message or postback and
+          // pass the event to the appropriate handler function
 
           handler.handlePostback(sender_psid, webhook_event.postback);
 
@@ -44,9 +53,7 @@ exports.post = (req, res) => {
 
       })();
 
-      // Check if the event is a message or postback and
-      // pass the event to the appropriate handler function
-
+      
     });
 
     // Returns a '200 OK' response to all requests
