@@ -53,7 +53,7 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
 
-    helper.imgResponse(attachment_url);
+    response = helper.imgResponse(attachment_url);
 
   } else if (received_message.nlp.entities.hasOwnProperty('intent')) {
 
