@@ -1,6 +1,6 @@
 "use strict";
 
-const helper = require('./webhookHelpers');
+const handler = require('./webhookHandlers');
 
 
 // Creates the post request endpoint for our webhook
@@ -21,13 +21,13 @@ exports.post = (req, res) => {
       // console.log('Sender PSID: ' + sender_psid);
       let userInfo;
       (async() => {
-        userInfo = await helper.getUserInfo(sender_psid);
+        userInfo = await handler.getUserInfo(sender_psid);
         console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-          helper.handleMessage(sender_psid, webhook_event.message, userInfo);        
+          handler.handleMessage(sender_psid, webhook_event.message, userInfo);        
         } else if (webhook_event.postback) {
-          helper.handlePostback(sender_psid, webhook_event.postback);
+          handler.handlePostback(sender_psid, webhook_event.postback);
         }
 
       })();
