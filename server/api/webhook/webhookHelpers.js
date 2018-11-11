@@ -11,6 +11,7 @@ exports.intentType = function(type, conf, uInfo) {
       response = {
         "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
       }
+      
     } else {
       response = {
         "text": `Sorry, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }!, Couldn't detect an intent :(`
@@ -58,6 +59,30 @@ exports.imgResponse = function (img_url) {
             }
           ],
         }]
+      }
+    }
+  }
+
+  return response;
+}
+
+exports.urlButton = function () {
+
+  let response;
+
+  response = {
+    "attachment":{
+      "type":"template",
+      "payload":{
+        "template_type":"button",
+        "text":"Thank you for getting in touch with us! We will get back to you soon, in the meantime you can stalk us on our Instagram",
+        "buttons":[
+          {
+            "type":"web_url",
+            "url":"https://www.instagram.com/helloboomerang",
+            "title":"Boomerang Instagram"
+          }
+        ]
       }
     }
   }

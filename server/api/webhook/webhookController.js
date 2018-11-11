@@ -1,6 +1,7 @@
 "use strict";
 
-const handler = require('./webhookHandlers');
+const handler = require('./webhookHandlers'),
+      helper = require('./webhookHelpers');
 
 
 // Creates the post request endpoint for our webhook
@@ -25,9 +26,20 @@ exports.post = (req, res) => {
         console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-          handler.handleMessage(sender_psid, webhook_event.message, userInfo);        
+          immediateResponse = helper.urlButton()
+
+          handler.callSendAPI(sender_psid, immediateResponse)
+
+          // send nlp response after 2 min
+          setInterval(function(){
+            console.log('NLP FIRED!')
+            handler.handleMessage(sender_psid, webhook_event.message, userInfo);
+          }, 3600);
+
         } else if (webhook_event.postback) {
+
           handler.handlePostback(sender_psid, webhook_event.postback);
+
         }
 
       })();
