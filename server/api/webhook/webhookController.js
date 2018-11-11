@@ -26,7 +26,7 @@ exports.post = (req, res) => {
         console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-          immediateResponse = helper.urlButton()
+          let immediateResponse = helper.urlButton();
 
           handler.callSendAPI(sender_psid, immediateResponse)
 
