@@ -1,5 +1,7 @@
 "use strict";
 
+const helper = require('./webhookHelpers')
+
 const axios = require('axios'),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
@@ -40,39 +42,6 @@ exports.callSendAPI = async function (sender_psid, response) {
 }
 
 
-// Check the type of intent the user sent in message
-exports.intentType = function(type, conf, uInfo) {
-
-  let response;
-
-  if (uInfo) {
-    if (conf > 0.5) {
-      response = {
-        "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! I am ${Math.round(conf * 100)}% confident that your intent type is '${type}' :)`
-      }
-    } else {
-      response = {
-        "text": `Sorry, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }!, Couldn't detect an intent :(`
-      }
-    }
-  } else {
-    if (conf > 0.5) {
-      response = {
-        "text": `Hi, confident that your intent type is '${type}' :)`
-      }
-    } else {
-      response = {
-        "text": `Sorry, Couldn't detect an intent :(`
-      }
-    }
-  }
-
-
-  return response;
-
-}
-
-
 // Handles messages events
 exports.handleMessage = function (sender_psid, received_message, user_info) {
 
@@ -83,36 +52,14 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
    if (received_message.hasOwnProperty('attachments')) {
     // Get the URL of the message attachment
     let attachment_url = received_message.attachments[0].payload.url;
-    response = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Le tek yo emej",
-            "subtitle": "Tap dat button to answer",
-            "image_url": attachment_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ],
-          }]
-        }
-      }
-    }
+
+    helper.imgResponse(attachment_url);
+
   } else if (received_message.nlp.entities.hasOwnProperty('intent')) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
-    response = exports.intentType(intent, confidence, user_info);
+    response = helper.intentType(intent, confidence, user_info);
 
   } else if (received_message.hasOwnProperty('text')) {
     response = {
@@ -124,7 +71,6 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
   exports.callSendAPI(sender_psid, response)
 
 }
-
 
 // Handles messaging_postbacks events
 exports.handlePostback = function (sender_psid, received_postback) {
@@ -160,5 +106,5 @@ exports.getUserInfo = async function (psid) {
   } catch(e) {
     console.log(e)
   }
-  
+
 }

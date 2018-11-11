@@ -1,6 +1,7 @@
 
 "use strict";
 
+// Check the type of intent the user sent in message
 exports.intentType = function(type, conf, uInfo) {
 
   let response;
@@ -33,31 +34,33 @@ exports.intentType = function(type, conf, uInfo) {
 }
 
 exports.imgResponse = function (img_url) {
-  return  (
-    {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "generic",
-          "elements": [{
-            "title": "Le tek yo emej",
-            "subtitle": "Tap dat button to answer",
-            "image_url": img_url,
-            "buttons": [
-              {
-                "type": "postback",
-                "title": "Yes!",
-                "payload": "yes",
-              },
-              {
-                "type": "postback",
-                "title": "No!",
-                "payload": "no",
-              }
-            ]
-          }]
-        }
+  let response;
+
+  response = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+          "title": "Le tek yo emej",
+          "subtitle": "Tap dat button to answer",
+          "image_url": img_url,
+          "buttons": [
+            {
+              "type": "postback",
+              "title": "Yes!",
+              "payload": "yes",
+            },
+            {
+              "type": "postback",
+              "title": "No!",
+              "payload": "no",
+            }
+          ],
+        }]
       }
     }
-  )
+  }
+
+  return response;
 }
