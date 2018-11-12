@@ -50,14 +50,14 @@ exports.imgResponse = function (img_url) {
             {
               "type": "postback",
               "title": "Yes!",
-              "payload": "yes",
+              "payload": "yes"
             },
             {
               "type": "postback",
               "title": "No!",
-              "payload": "no",
+              "payload": "no"
             }
-          ],
+          ]
         }]
       }
     }

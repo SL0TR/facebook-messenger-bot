@@ -26,12 +26,32 @@ exports.post = (req, res) => {
         console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
+
+          let init = false;
+
           let immediateResponse = helper.urlButton();
 
-          handler.callSendAPI(sender_psid, immediateResponse)
+          if (!init) {
+
+            handler.callSendAPI(sender_psid, immediateResponse)
+            init = true;
+
+            setTimeout(function() {
+
+              //console.log('NLP FIRED!')
+              handler.handleMessage(sender_psid, webhook_event.message, userInfo);
+  
+            }, delay);
+
+          } else {
+
+            handler.handleMessage(sender_psid, webhook_event.message, userInfo);
+
+          }
+
 
           // send nlp response after certain time(minutes)
-          const minutes = 2;
+          const minutes = 1;
           const delay = minutes * 60 * 1000;
 
           setTimeout(function() {
