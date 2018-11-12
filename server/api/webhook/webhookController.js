@@ -2,7 +2,7 @@
 
 const handler = require('./webhookHandlers'),
   helper = require('./webhookHelpers');
-let init = false;
+// let init = false;
 
 // Creates the post request endpoint for our webhook
 exports.post = (req, res) => {
@@ -27,29 +27,29 @@ exports.post = (req, res) => {
 
         if (webhook_event.message) {
 
-          let immediateResponse = helper.urlButton();
+          // let immediateResponse = helper.urlButton();
 
-          if (!init) {
+          // if (!init) {
 
-            handler.callSendAPI(sender_psid, immediateResponse)
-            init = true;
+          //   handler.callSendAPI(sender_psid, immediateResponse)
+          //   init = true;
 
-            // send nlp response after certain time(minutes)
-            const minutes = 1;
-            const delay = minutes * 60 * 1000;
+          //   // send nlp response after certain time(minutes)
+          //   const minutes = 1;
+          //   const delay = minutes * 60 * 1000;
 
-            setTimeout(function() {
+          //   setTimeout(function() {
 
-              //console.log('NLP FIRED!')
-              handler.handleMessage(sender_psid, webhook_event.message, userInfo);
-  
-            }, delay);
+          //     //console.log('NLP FIRED!')
+          //     handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
-          } else {
+          //   }, delay);
+
+          // } else {
 
             handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
-          }
+          // }
 
         } else if (webhook_event.postback) {
 
@@ -97,5 +97,6 @@ exports.get = (req, res) => {
       res.sendStatus(403);
     }
   }
+
 };
 
