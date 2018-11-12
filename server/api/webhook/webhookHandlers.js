@@ -59,7 +59,7 @@ exports.handleMessage = function (sender_psid, received_message, user_info) {
 
     let intent = received_message.nlp.entities.intent[0].value;
     let confidence = received_message.nlp.entities.intent[0].confidence;
-    response = helper.intentType(intent, confidence, user_info);
+    response = helper.intentResponse(intent, confidence, user_info);
 
   } else if (received_message.hasOwnProperty('text')) {
     response = {

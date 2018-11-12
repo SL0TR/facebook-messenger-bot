@@ -2,30 +2,43 @@
 "use strict";
 
 // Check the type of intent the user sent in message
-exports.intentType = function(type, conf, uInfo) {
+exports.intentResponse = function(type, conf, userInfo) {
 
   let response;
 
-  if (uInfo) {
-    if (conf > 0.5) {
-      response = {
-        "text": `Hi, ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }! Thank you for messaging us. How can we assist you?`
-      }
-      
-    } else {
-      response = {
-        "text": ` I'm Sorry ${ uInfo.gender === 'male' ?  'Mr ' + uInfo.first_name : 'Mrs ' + uInfo.first_name }, I didn't get that, can you rephrase?`
-      }
+  if (type === 'greeting') {
+    
+    response = {
+      "text": `Hi, ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }! Thank you for messaging us. How can we assist you?`
     }
+
+  } else if (type === 'compliment')  {
+
+    response = {
+      "text": `Thanks, we are glad to you liked it!`
+    }
+
+  } else if (type === 'criticism') {
+
+    response = {
+      "text": `Thank you for sharing your point of view, we are always open to constructive feedbacks`
+    }
+
+  } else if (type === 'insult') {
+
+    response = {
+      "text": `That's not a very nice thing to say!`
+    }
+
+  } else if (type === 'services') {
+
+    response = {
+      "text": `Here is the list of the services that we provide`
+    }
+
   } else {
-    if (conf > 0.5) {
-      response = {
-        "text": `Hi, confident that your intent type is '${type}' :)`
-      }
-    } else {
-      response = {
-        "text": `Sorry, Couldn't detect an intent :(`
-      }
+    response = {
+      "text": ` I'm Sorry ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
     }
   }
 
