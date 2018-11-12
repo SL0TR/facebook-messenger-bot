@@ -36,6 +36,10 @@ exports.post = (req, res) => {
             handler.callSendAPI(sender_psid, immediateResponse)
             init = true;
 
+            // send nlp response after certain time(minutes)
+            const minutes = 1;
+            const delay = minutes * 60 * 1000;
+
             setTimeout(function() {
 
               //console.log('NLP FIRED!')
@@ -48,18 +52,6 @@ exports.post = (req, res) => {
             handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
           }
-
-
-          // send nlp response after certain time(minutes)
-          const minutes = 1;
-          const delay = minutes * 60 * 1000;
-
-          setTimeout(function() {
-
-            //console.log('NLP FIRED!')
-            handler.handleMessage(sender_psid, webhook_event.message, userInfo);
-
-          }, delay);
 
         } else if (webhook_event.postback) {
 
