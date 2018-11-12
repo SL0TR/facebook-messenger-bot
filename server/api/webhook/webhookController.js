@@ -1,8 +1,8 @@
 "use strict";
 
 const handler = require('./webhookHandlers'),
-      helper = require('./webhookHelpers');
-
+  helper = require('./webhookHelpers');
+let init = false;
 
 // Creates the post request endpoint for our webhook
 exports.post = (req, res) => {
@@ -26,8 +26,6 @@ exports.post = (req, res) => {
         console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-
-          let init = false;
 
           let immediateResponse = helper.urlButton();
 
