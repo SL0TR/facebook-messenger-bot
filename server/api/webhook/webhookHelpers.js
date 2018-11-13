@@ -32,7 +32,11 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    this.btnListResponse('services');
+   let response2 =  exports.btnListResponse('services');
+     console.dir(response2, null, true);
+    response = {
+      "text": `testing service path`
+    }
 
   } else {
     response = {
@@ -215,5 +219,7 @@ exports.btnListResponse = function (type) {
     }
 
   }
+  
+  return response;
 
 }
