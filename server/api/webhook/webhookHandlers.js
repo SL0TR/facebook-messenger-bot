@@ -101,6 +101,20 @@ exports.handlePostback = function (sender_psid, received_postback) {
     response = { 
       "text": `description about ${payload}`
     }
+  } else if (payload === 'uxUi') {
+
+    response = { 
+      "text": `description about ${payload}`
+    }
+  } else if (payload === 'content') {
+
+    response = { 
+      "text": `description about ${payload}`
+    }
+  } else {
+    response = {
+      "text": `I didn't get that, can you rephrase?`
+    }
   }
 
   // Send the message to acknowledge the postback

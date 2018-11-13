@@ -233,9 +233,14 @@ exports.btnListResponse = function (type) {
                   "payload": "mobWebDev"
                 },
                 {
-                  "type":"web_url",
-                  "url":"https://www.boomerangbd.com/our-services/",
-                  "title":"Visit Our Website"
+                  "type": "postback",
+                  "title": "UX / UI Design",
+                  "payload": "uxUi"
+                },
+                {
+                  "type": "postback",
+                  "title": "Content",
+                  "payload": "content"
                 }
               ]
             }
