@@ -32,7 +32,7 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    response = this.urlButtonResponse();
+    response = this.btnListResponse();
 
   } else {
     response = {
@@ -212,6 +212,28 @@ exports.btnListResponse = function (type) {
     //       ]
     //     }
     //   }
+      response = {
+        "attachment":{
+          "type":"template",
+          "payload":{
+            "template_type":"button",
+            "text":"Try the postback button!",
+            "buttons":[
+              {
+                "type":"postback",
+                "title":"Postback Button",
+                "payload":"vid-prod"
+              },
+              {
+                "type":"postback",
+                "title":"Postback Button",
+                "payload":"mob-web-dev"
+              }
+            ]
+          }
+        }
+      }
+  
      }
   
   return response;
