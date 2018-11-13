@@ -32,66 +32,13 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-   let  response2 = exports.btnListResponse(type);
-    console.dir(response2, null, true);
-    
-    response = {
-        "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type": "generic",
-          "elements": [
-            {
-              "title": "Swipe left/right for more options.",
-              "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Button 1",
-                  "payload": "button1"
-                },
-                {
-                  "type": "postback",
-                  "title": "Button 2",
-                  "payload": "button2"
-                },
-                {
-                  "type": "postback",
-                  "title": "Button 3",
-                  "payload": "button3"
-                }
-              ]
-            },
-            {
-              "title": "Swipe left/right for more options.",
-              "buttons": [
-                {
-                  "type": "postback",
-                  "title": "Button 4",
-                  "payload": "button4"
-                },
-                {
-                  "type": "postback",
-                  "title": "Button 5",
-                  "payload": "button5"
-                },
-                {
-                  "type": "postback",
-                  "title": "Button 6",
-                  "payload": "button6"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
+    response = exports.btnListResponse(type);
 
   } else {
     response = {
       "text": ` I'm Sorry ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
     }
   }
-
 
   return response;
 
@@ -251,39 +198,52 @@ exports.btnListResponse = function (type) {
 
   if (type === 'services') {
 
-      response = {
-        "attachment":{
-          "type":"template",
-          "payload":{
-            "template_type":"button",
-            "text":"Try the postback button!",
-            "buttons":[
-              {
-                "type": "postback",
-                "title": "Marketing",
-                "payload": "marketing",
-              },
-              {
-                "type": "postback",
-                "title": "Video Prduction",
-                "payload": "vid-prod",
-              },
-              {
-                "type": "postback",
-                "title": "Branding",
-                "payload": "branding",
-              },
-              {
-                "type": "postback",
-                "title": "Mobile App and Web Development",
-                "payload": "mob-web-dev"
-              }
-            ]
-          }
+    response = {
+      "attachment":{
+      "type":"template",
+        "payload": {
+          "template_type": "generic",
+          "elements": [
+            {
+              "title": "Here are the services of Boomerang Digital.",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Marketing",
+                  "payload": "marketing",
+                },
+                {
+                  "type": "postback",
+                  "title": "Video Prduction",
+                  "payload": "vid-prod",
+                },
+                {
+                  "type": "postback",
+                  "title": "Branding",
+                  "payload": "branding",
+                }
+              ]
+            },
+            {
+              "title": "Swipe left/right for more options.",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Mobile App and Web Development",
+                  "payload": "mob-web-dev"
+                },
+                {
+                  "type":"web_url",
+                  "url":"https://www.boomerangbd.com/our-services/",
+                  "title":"Visit Our Website"
+                }
+              ]
+            }
+          ]
         }
       }
-
     }
+  }
 
   return response;
 
