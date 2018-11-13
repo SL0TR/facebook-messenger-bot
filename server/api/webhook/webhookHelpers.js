@@ -32,7 +32,7 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    let  response2 = exports.btnListResponse(type);
+   let  response2 = exports.btnListResponse(type);
     console.dir(response2, null, true);
     
     response = {
@@ -43,19 +43,19 @@ exports.intentResponse = function(type, conf, userInfo) {
           "text":"Try the postback button!",
           "buttons":[
             {
-              "type":"web_url",
-              "url":"https://www.messenger.com",
-              "title":"Visit Messenger"
+              "type":"postback",
+              "title":"Postback Button",
+              "payload":"marketing"
             },
             {
-              "type":"web_url",
-              "url":"https://www.messenger.com",
-              "title":"Visit Messenger"
+              "type":"postback",
+              "title":"Postback Button2",
+              "payload":"marketing"
             },
             {
-              "type":"web_url",
-              "url":"https://www.messenger.com",
-              "title":"Visit Messenger"
+              "type":"postback",
+              "title":"Postback Button3",
+              "payload":"marketing"
             }
           ]
         }
