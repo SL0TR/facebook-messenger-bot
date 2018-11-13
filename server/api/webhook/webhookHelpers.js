@@ -43,24 +43,19 @@ exports.intentResponse = function(type, conf, userInfo) {
           "text":"Try the postback button!",
           "buttons":[
             {
-              "type": "postback",
-              "title": "Marketing",
-              "payload": "marketing",
+              "type":"web_url",
+              "url":"https://www.messenger.com",
+              "title":"Visit Messenger"
             },
             {
-              "type": "postback",
-              "title": "Video Prduction",
-              "payload": "vid-prod",
+              "type":"web_url",
+              "url":"https://www.messenger.com",
+              "title":"Visit Messenger"
             },
             {
-              "type": "postback",
-              "title": "Branding",
-              "payload": "branding",
-            },
-            {
-              "type": "postback",
-              "title": "Mobile App and Web Development",
-              "payload": "mob-web-dev"
+              "type":"web_url",
+              "url":"https://www.messenger.com",
+              "title":"Visit Messenger"
             }
           ]
         }
