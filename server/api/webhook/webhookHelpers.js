@@ -32,37 +32,7 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    response = {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"button",
-          "text":"Here is the list of services",
-          "buttons":[
-            {
-              "type": "postback",
-              "title": "Marketing",
-              "payload": "marketing",
-            },
-            {
-              "type": "postback",
-              "title": "Video Prduction",
-              "payload": "vid-prod",
-            },
-            {
-              "type": "postback",
-              "title": "Branding",
-              "payload": "branding",
-            },
-            {
-              "type": "postback",
-              "title": "Mobile App and Web Development",
-              "payload": "mob-web-dev",
-            }
-          ]
-        }
-      }
-    }
+    response = this.urlButtonResponse();
 
   } else {
     response = {
@@ -212,39 +182,37 @@ exports.btnListResponse = function (type) {
 
   if (type === 'services') {
     
-    response = {
-      "attachment":{
-        "type":"template",
-        "payload":{
-          "template_type":"button",
-          "text":"",
-          "buttons":[
-            {
-              "type": "postback",
-              "title": "Marketing",
-              "payload": "marketing",
-            },
-            {
-              "type": "postback",
-              "title": "Video Prduction",
-              "payload": "vid-prod",
-            },
-            {
-              "type": "postback",
-              "title": "Branding",
-              "payload": "branding",
-            },
-            {
-              "type": "postback",
-              "title": "Mobile App and Web Development",
-              "payload": "mob-web-dev",
-            }
-          ]
-        }
-      }
-    }
-
-  }
+    // response = {
+    //   "attachment":{
+    //     "type":"template",
+    //     "payload":{
+    //       "template_type":"button",
+    //       "text":"Here is the list of services",
+    //       "buttons":[
+    //         {
+    //           "type": "postback",
+    //           "title": "Marketing",
+    //           "payload": "marketing",
+    //         },
+    //         {
+    //           "type": "postback",
+    //           "title": "Video Prduction",
+    //           "payload": "vid-prod",
+    //         },
+    //         {
+    //           "type": "postback",
+    //           "title": "Branding",
+    //           "payload": "branding",
+    //         },
+    //         {
+    //           "type": "postback",
+    //           "title": "Mobile App and Web Development",
+    //           "payload": "mob-web-dev",
+    //         }
+    //       ]
+    //     }
+    //   }
+     }
   
   return response;
 
