@@ -39,23 +39,47 @@ exports.intentResponse = function(type, conf, userInfo) {
         "attachment":{
         "type":"template",
         "payload":{
-          "template_type":"button",
-          "text":"Try the postback button!",
-          "buttons":[
+          "template_type": "generic",
+          "elements": [
             {
-              "type":"postback",
-              "title":"Marketing",
-              "payload":"marketing"
+              "title": "Swipe left/right for more options.",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Button 1",
+                  "payload": "button1"
+                },
+                {
+                  "type": "postback",
+                  "title": "Button 2",
+                  "payload": "button2"
+                },
+                {
+                  "type": "postback",
+                  "title": "Button 3",
+                  "payload": "button3"
+                }
+              ]
             },
             {
-              "type":"postback",
-              "title":"Video Production",
-              "payload":"vidProd"
-            },
-            {
-              "type":"postback",
-              "title":"Branding",
-              "payload":"branding"
+              "title": "Swipe left/right for more options.",
+              "buttons": [
+                {
+                  "type": "postback",
+                  "title": "Button 4",
+                  "payload": "button4"
+                },
+                {
+                  "type": "postback",
+                  "title": "Button 5",
+                  "payload": "button5"
+                },
+                {
+                  "type": "postback",
+                  "title": "Button 6",
+                  "payload": "button6"
+                }
+              ]
             }
           ]
         }
