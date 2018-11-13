@@ -32,7 +32,40 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-   response = exports.btnListResponse(type);
+    let  response2 = exports.btnListResponse(type);
+    console.dir(response2, null, true);
+    
+    response = {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":"Try the postback button!",
+          "buttons":[
+            {
+              "type": "postback",
+              "title": "Marketing",
+              "payload": "marketing",
+            },
+            {
+              "type": "postback",
+              "title": "Video Prduction",
+              "payload": "vid-prod",
+            },
+            {
+              "type": "postback",
+              "title": "Branding",
+              "payload": "branding",
+            },
+            {
+              "type": "postback",
+              "title": "Mobile App and Web Development",
+              "payload": "mob-web-dev"
+            }
+          ]
+        }
+      }
+    }
 
   } else {
     response = {
