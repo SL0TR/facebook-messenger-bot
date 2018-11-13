@@ -43,25 +43,25 @@ exports.intentResponse = function(type, conf, userInfo) {
           "text":"Try the postback button!",
           "buttons":[
             {
-              "type": "postback",
-              "title": "Marketing",
-              "payload": "marketing"
+              "type":"postback",
+              "title":"Marketing",
+              "payload":"marketing"
             },
             {
-              "type": "postback",
-              "title": "Video Prduction",
-              "payload": "vidProd"
+              "type":"postback",
+              "title":"Video Production",
+              "payload":"vidProd"
             },
             {
-              "type": "postback",
-              "title": "Branding",
-              "payload": "branding"
+              "type":"postback",
+              "title":"Branding",
+              "payload":"branding"
             },
             {
-              "type": "postback",
-              "title": "Mobile App and Web Development",
-              "payload": "mobWebDev"
-            }
+              "type":"postback",
+              "title":"Mobile App and Web Development",
+              "payload":"mobWebDev"
+            },
           ]
         }
       }
