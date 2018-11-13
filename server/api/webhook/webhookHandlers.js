@@ -86,7 +86,7 @@ exports.handlePostback = function (sender_psid, received_postback) {
       "text": `description about ${payload}`
     }
 
-  } else if (payload === 'vid-production') {
+  } else if (payload === 'vidProd') {
 
     response = { 
       "text": `description about ${payload}`
@@ -96,7 +96,7 @@ exports.handlePostback = function (sender_psid, received_postback) {
     response = { 
       "text": `description about ${payload}`
     }
-  } else if (payload === 'mob-web-dev') {
+  } else if (payload === 'mobWebDev') {
 
     response = { 
       "text": `description about ${payload}`
