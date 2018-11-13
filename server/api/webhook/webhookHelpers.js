@@ -215,7 +215,7 @@ exports.btnListResponse = function (type) {
                 {
                   "type": "postback",
                   "title": "Video Prduction",
-                  "payload": "vid-prod",
+                  "payload": "vidProd",
                 },
                 {
                   "type": "postback",
@@ -230,7 +230,7 @@ exports.btnListResponse = function (type) {
                 {
                   "type": "postback",
                   "title": "Mobile App and Web Development",
-                  "payload": "mob-web-dev"
+                  "payload": "mobWebDev"
                 },
                 {
                   "type":"web_url",
