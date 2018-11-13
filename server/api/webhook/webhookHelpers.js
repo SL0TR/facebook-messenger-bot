@@ -36,31 +36,16 @@ exports.intentResponse = function(type, conf, userInfo) {
     console.dir(response2, null, true);
     
     response = {
-      "attachment":{
+        "attachment":{
         "type":"template",
         "payload":{
           "template_type":"button",
           "text":"Try the postback button!",
           "buttons":[
             {
-              "type": "postback",
-              "title": "Marketing",
-              "payload": "marketing",
-            },
-            {
-              "type": "postback",
-              "title": "Video Prduction",
-              "payload": "vid-prod",
-            },
-            {
-              "type": "postback",
-              "title": "Branding",
-              "payload": "branding",
-            },
-            {
-              "type": "postback",
-              "title": "Mobile App and Web Development",
-              "payload": "mob-web-dev"
+              "type":"postback",
+              "title":"Postback Button",
+              "payload":"marketing"
             }
           ]
         }
