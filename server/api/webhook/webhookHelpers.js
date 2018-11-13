@@ -32,9 +32,7 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    response = {
-      "text": `Here is the list of the services that we provide`
-    }
+    this.btnListResponse('services');
 
   } else {
     response = {
@@ -79,7 +77,7 @@ exports.imgResponse = function (img_url) {
   return response;
 }
 
-exports.urlButton = function () {
+exports.urlButtonResponse = function () {
 
   let response;
 
@@ -101,4 +99,121 @@ exports.urlButton = function () {
   }
 
   return response;
+}
+
+exports.sliderResponse = function (type) {
+  let response;
+
+  if (type === 'work') {
+
+    response = {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Welcome!",
+              "image_url":"https://petersfancybrownhats.com/company_image.png",
+              "subtitle":"We have the right hat for everyone.",
+              "default_action": {
+                "type": "web_url",
+                "url": "https://petersfancybrownhats.com/view?item=103",
+                "webview_height_ratio": "tall",
+              },
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://petersfancybrownhats.com",
+                  "title":"View Website"
+                },{
+                  "type":"postback",
+                  "title":"Start Chatting",
+                  "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                }              
+              ]      
+            }
+          ]
+        }
+      }
+    }
+
+  } else if (type === 'clients') {
+    
+    response = {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"generic",
+          "elements":[
+            {
+              "title":"Welcome!",
+              "image_url":"https://petersfancybrownhats.com/company_image.png",
+              "subtitle":"We have the right hat for everyone.",
+              "default_action": {
+                "type": "web_url",
+                "url": "https://petersfancybrownhats.com/view?item=103",
+                "webview_height_ratio": "tall",
+              },
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://petersfancybrownhats.com",
+                  "title":"View Website"
+                },{
+                  "type":"postback",
+                  "title":"Start Chatting",
+                  "payload":"DEVELOPER_DEFINED_PAYLOAD"
+                }              
+              ]      
+            }
+          ]
+        }
+      }
+    }
+
+  }
+
+}
+
+exports.btnListResponse = function (type) {
+
+  let response;
+
+  if (type === 'services') {
+    
+    response = {
+      "attachment":{
+        "type":"template",
+        "payload":{
+          "template_type":"button",
+          "text":"",
+          "buttons":[
+            {
+              "type": "postback",
+              "title": "Marketing",
+              "payload": "marketing",
+            },
+            {
+              "type": "postback",
+              "title": "Video Prduction",
+              "payload": "vid-prod",
+            },
+            {
+              "type": "postback",
+              "title": "Branding",
+              "payload": "branding",
+            },
+            {
+              "type": "postback",
+              "title": "Mobile App and Web Development",
+              "payload": "mob-web-dev",
+            }
+          ]
+        }
+      }
+    }
+
+  }
+
 }

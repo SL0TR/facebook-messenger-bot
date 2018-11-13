@@ -27,7 +27,7 @@ exports.post = (req, res) => {
 
         if (webhook_event.message) {
 
-          // let immediateResponse = helper.urlButton();
+          // let immediateResponse = helper.urlButtonResponse();
 
           // if (!init) {
 

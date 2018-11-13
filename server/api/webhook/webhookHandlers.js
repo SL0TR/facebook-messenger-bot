@@ -80,15 +80,27 @@ exports.handlePostback = function (sender_psid, received_postback) {
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'yes') {
+  if (payload === 'marketing') {
 
     response = { 
-      "text": "You're welcome :)" 
+      "text": `description about ${payload}`
     }
 
-  } else if (payload === 'no') {
+  } else if (payload === 'vid-production') {
 
-    response = { "text": "Oops, try sending another image." }
+    response = { 
+      "text": `description about ${payload}`
+    }
+  } else if (payload === 'branding') {
+
+    response = { 
+      "text": `description about ${payload}`
+    }
+  } else if (payload === 'mob-web-dev') {
+
+    response = { 
+      "text": `description about ${payload}`
+    }
   }
 
   // Send the message to acknowledge the postback
