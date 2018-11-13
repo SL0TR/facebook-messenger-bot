@@ -56,12 +56,7 @@ exports.intentResponse = function(type, conf, userInfo) {
               "type":"postback",
               "title":"Branding",
               "payload":"branding"
-            },
-            {
-              "type":"postback",
-              "title":"Mobile App and Web Development",
-              "payload":"mobWebDev"
-            },
+            }
           ]
         }
       }
