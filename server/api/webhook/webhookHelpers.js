@@ -32,24 +32,7 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-   let  response2 = exports.btnListResponse(type);
-	console.dir(response2, null, true);
-   response = {
-        "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"Try the postback button!",
-        "buttons":[
-          {
-            "type":"postback",
-            "title":"Postback Button",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD"
-          }
-        ]
-      }
-    }
-      }
+   response = exports.btnListResponse(type);
 
   } else {
     response = {
@@ -221,7 +204,7 @@ exports.btnListResponse = function (type) {
           "type":"template",
           "payload":{
             "template_type":"button",
-            "text":"Here is the list of services",
+            "text":"Try the postback button!",
             "buttons":[
               {
                 "type": "postback",
