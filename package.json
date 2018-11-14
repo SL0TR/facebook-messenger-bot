@@ -5,8 +5,8 @@
   "main": "bot.js",
   "scripts": {
     "lint": "eslint '**/*.js'",
-    "start": "npm run lint && node bot.js",
-    "format": "prettier --write 'server/**/.js'"
+    "format": "prettier --write \"server/**/*.js\"",
+    "start": "npm run format && npm run lint && node bot.js"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,9 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
     "prettier": "^1.15.2"
   }
 }

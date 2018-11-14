@@ -2,7 +2,7 @@
 
 const handler = require("./webhookHandlers"),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-  // helper = require("./webhookHelpers");
+// helper = require("./webhookHelpers");
 // let init = false;
 
 // Creates the post request endpoint for our webhook
@@ -68,7 +68,6 @@ exports.post = (req, res) => {
 
 // Recieve GET request in out api gateway
 exports.get = (req, res) => {
-
   // Parse the query params
   let mode = req.query["hub.mode"];
   let token = req.query["hub.verify_token"];

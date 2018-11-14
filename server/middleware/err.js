@@ -3,7 +3,8 @@
 const logger = require("../util/logger");
 
 module.exports = function() {
-  return function(err, req, res, next) { // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
+  return function(err, req, res, next) {
     logger.error(err.stack);
     res.status(500).send("Oops");
   };
