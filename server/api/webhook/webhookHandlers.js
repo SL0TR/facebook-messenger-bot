@@ -45,27 +45,42 @@ exports.callSendAPI = async function (sender_psid, response) {
 // Handles messages events
 exports.handleMessage = function (sender_psid, received_message, user_info) {
 
-  let response;
+  let response, intent, confidence;
 
   console.dir(received_message, { depth: null })
 
-   if (received_message.hasOwnProperty('attachments')) {
+    if (received_message.attachments) {
     // Get the URL of the message attachment
-    let attachment_url = received_message.attachments[0].payload.url;
+    // let attachment_url = received_message.attachments[0].payload.url;
 
-    response = helper.imgResponse(attachment_url);
+    response = helper.imgResponse();
 
-  } else if (received_message.nlp.entities.hasOwnProperty('intent')) {
+  } else if (received_message.nlp.entities) {
 
-    let intent = received_message.nlp.entities.intent[0].value;
-    let confidence = received_message.nlp.entities.intent[0].confidence;
-    response = helper.intentResponse(intent, confidence, user_info);
+    if (received_message.nlp.entities.intent) {
+      intent = received_message.nlp.entities.intent[0].value;
+      confidence = received_message.nlp.entities.intent[0].confidence;
 
-  } else if (received_message.hasOwnProperty('text')) {
-    response = {
-      "text": `This is out of NLP Logic scope, make me smarter, Noob`
+      // get correct response according to nlp entity
+      response = helper.intentResponse(intent, confidence, user_info, null);
+
+    } else if ( received_message.nlp.entities.greetings) {
+
+      let greeting = received_message.nlp.entities.greetings[0].value;
+      confidence = received_message.nlp.entities.greetings[0].confidence;
+
+      // get correct response according to nlp entity
+      response = helper.intentResponse(null, confidence, user_info, greeting);
+
+    } else {
+
+      response = {
+        "text": ` I'm sorry ${ user_info && user_info.gender === 'male' ?  'Mr ' + user_info.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
+      }
+
     }
-  }
+
+  } 
 
   // Send the response message
   exports.callSendAPI(sender_psid, response)
@@ -88,7 +103,7 @@ exports.handlePostback = function (sender_psid, received_postback) {
 
   } else if (payload === 'vidProd') {
 
-    response = { 
+    response = {
       "text": `description about ${payload}`
     }
   } else if (payload === 'branding') {

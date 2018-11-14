@@ -23,7 +23,7 @@ exports.post = (req, res) => {
       let userInfo;
       (async() => {
         userInfo = await handler.getUserInfo(sender_psid);
-        console.dir(userInfo, null, true)
+        // console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
 

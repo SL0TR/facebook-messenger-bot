@@ -2,11 +2,11 @@
 "use strict";
 
 // Check the type of intent the user sent in message
-exports.intentResponse = function(type, conf, userInfo) {
+exports.intentResponse = function(type, conf, userInfo, greet) {
 
   let response;
 
-  if (type === 'greeting') {
+  if (greet && greet === 'true') {
     
     response = {
       "text": `Hi, ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }! Thank you for messaging us. How can we assist you?`
@@ -32,11 +32,31 @@ exports.intentResponse = function(type, conf, userInfo) {
 
   } else if (type === 'services') {
 
-    response = exports.btnListResponse(type);
+    response = this.btnListResponse(type);
+
+  } else if (type === 'instagram') {
+
+    response = this.urlButtonResponse();
+
+  } else if (type === 'job') {
+
+    response = {
+      "text": `We currently have these vacancies available, visit out site to know more.`
+    }
+
+  } else if (type === 'leave') {
+
+    response = {
+      "text": `Goodbye and take care ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }`, 
+    }
+
+  } else if (type === 'portfolio') {
+
+    response = this.sliderResponse(type);
 
   } else {
     response = {
-      "text": ` I'm Sorry ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
+      "text": ` I'm sorry ${ userInfo && userInfo.gender === 'male' ?  'Mr ' + userInfo.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
     }
   }
 
@@ -44,35 +64,12 @@ exports.intentResponse = function(type, conf, userInfo) {
 
 }
 
-exports.imgResponse = function (img_url) {
+exports.imgResponse = function () {
   let response;
 
   response = {
-    "attachment": {
-      "type": "template",
-      "payload": {
-        "template_type": "generic",
-        "elements": [{
-          "title": "Le tek yo emej",
-          "subtitle": "Tap dat button to answer",
-          "image_url": img_url,
-          "buttons": [
-            {
-              "type": "postback",
-              "title": "Yes!",
-              "payload": "yes"
-            },
-            {
-              "type": "postback",
-              "title": "No!",
-              "payload": "no"
-            }
-          ]
-        }]
-      }
-    }
+    "text": `Please send a text message instead of an image`
   }
-
   return response;
 }
 
@@ -81,7 +78,7 @@ exports.urlButtonResponse = function () {
   let response;
 
   response = {
-    "attachment":{
+    "attachment": {
       "type":"template",
       "payload":{
         "template_type":"button",
@@ -101,75 +98,74 @@ exports.urlButtonResponse = function () {
 }
 
 exports.sliderResponse = function (type) {
+
   let response;
 
-  if (type === 'work') {
+  if (type === 'portfolio') {
 
     response = {
-      "attachment":{
+      "attachment": {
         "type":"template",
         "payload":{
           "template_type":"generic",
           "elements":[
             {
-              "title":"Welcome!",
-              "image_url":"https://petersfancybrownhats.com/company_image.png",
-              "subtitle":"We have the right hat for everyone.",
+              "title":"WEB DESIGN FOR GRAMEENPHONE",
+              "image_url":"https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_web_grameenphone.com_.jpg",
+              "subtitle":"Seamless, user optimized web design for the largest Telco in Bangladesh",
               "default_action": {
                 "type": "web_url",
-                "url": "https://petersfancybrownhats.com/view?item=103",
+                "url": "https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
                 "webview_height_ratio": "tall",
               },
               "buttons":[
                 {
                   "type":"web_url",
-                  "url":"https://petersfancybrownhats.com",
+                  "url":"https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
                   "title":"View Website"
-                },{
-                  "type":"postback",
-                  "title":"Start Chatting",
-                  "payload":"DEVELOPER_DEFINED_PAYLOAD"
-                }              
-              ]      
-            }
+                }             
+              ]
+            },
+            {
+              "title":"WEB DESIGN FOR GRAMEENPHONE",
+              "image_url":"https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_web_grameenphone.com_.jpg",
+              "subtitle":"Seamless, user optimized web design for the largest Telco in Bangladesh",
+              "default_action": {
+                "type": "web_url",
+                "url": "https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
+                "webview_height_ratio": "tall",
+              },
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
+                  "title":"View Website"
+                }             
+              ]
+            },
+            {
+              "title":"WEB DESIGN FOR GRAMEENPHONE",
+              "image_url":"https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_web_grameenphone.com_.jpg",
+              "subtitle":"Seamless, user optimized web design for the largest Telco in Bangladesh",
+              "default_action": {
+                "type": "web_url",
+                "url": "https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
+                "webview_height_ratio": "tall",
+              },
+              "buttons":[
+                {
+                  "type":"web_url",
+                  "url":"https://www.boomerangbd.com/our-work/web/web-design-grameenphone/",
+                  "title":"View Website"
+                }             
+              ]
+            },
           ]
         }
       }
     }
 
   } else if (type === 'clients') {
-    
-    // response = {
-    //   "attachment":{
-    //     "type":"template",
-    //     "payload":{
-    //       "template_type":"generic",
-    //       "elements":[
-    //         {
-    //           "title":"Welcome!",
-    //           "image_url":"https://petersfancybrownhats.com/company_image.png",
-    //           "subtitle":"We have the right hat for everyone.",
-    //           "default_action": {
-    //             "type": "web_url",
-    //             "url": "https://petersfancybrownhats.com/view?item=103",
-    //             "webview_height_ratio": "tall",
-    //           },
-    //           "buttons":[
-    //             {
-    //               "type":"web_url",
-    //               "url":"https://petersfancybrownhats.com",
-    //               "title":"View Website"
-    //             },{
-    //               "type":"postback",
-    //               "title":"Start Chatting",
-    //               "payload":"DEVELOPER_DEFINED_PAYLOAD"
-    //             }              
-    //           ]      
-    //         }
-    //       ]
-    //     }
-    //   }
-    // }
 
     response = {
       "attachment":{
@@ -190,6 +186,8 @@ exports.sliderResponse = function (type) {
 
   }
 
+  return response;
+
 }
 
 exports.btnListResponse = function (type) {
@@ -205,7 +203,7 @@ exports.btnListResponse = function (type) {
           "template_type": "generic",
           "elements": [
             {
-              "title": "Here are the services of Boomerang Digital.",
+              "title": "Marketing",
               "buttons": [
                 {
                   "type": "postback",
@@ -225,7 +223,7 @@ exports.btnListResponse = function (type) {
               ]
             },
             {
-              "title": "Swipe left/right for more options.",
+              "title": "Tech", 
               "buttons": [
                 {
                   "type": "postback",
