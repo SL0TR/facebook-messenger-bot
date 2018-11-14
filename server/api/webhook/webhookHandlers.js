@@ -1,151 +1,139 @@
 "use strict";
 
-const helper = require('./webhookHelpers')
+const helper = require("./webhookHelpers");
 
-const axios = require('axios'),
+const axios = require("axios"),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
-
 // Send response back with post request to facebook api
-exports.callSendAPI = async function (sender_psid, response) {
-
+exports.callSendAPI = async function(sender_psid, response) {
   let request_body = {
-    "recipient": {
-      "id": sender_psid
+    recipient: {
+      id: sender_psid
     },
-    "message": response
-  }
+    message: response
+  };
 
   let senderAction = {
     loader: {
-      "recipient": {
-        "id": sender_psid
+      recipient: {
+        id: sender_psid
       },
-      "sender_action":"typing_on"
+      sender_action: "typing_on"
     }
-  }
+  };
 
-  let url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + PAGE_ACCESS_TOKEN
-
-  try {
-    await axios.post(url, senderAction.loader)
-  } catch(e) {
-    console.log(e)
-  }
+  let url =
+    "https://graph.facebook.com/v2.6/me/messages?access_token=" +
+    PAGE_ACCESS_TOKEN;
 
   try {
-    await axios.post(url, request_body)
-  } catch(e) {
-    console.log(e)
+    await axios.post(url, senderAction.loader);
+  } catch (e) {
+    console.log(e);
   }
 
-}
-
+  try {
+    await axios.post(url, request_body);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 // Handles messages events
-exports.handleMessage = function (sender_psid, received_message, user_info) {
-
+exports.handleMessage = function(sender_psid, received_message, user_info) {
   let response, intent, confidence;
 
-  console.dir(received_message, { depth: null })
+  console.dir(received_message, { depth: null });
 
-    if (received_message.attachments) {
+  if (received_message.attachments) {
     // Get the URL of the message attachment
     // let attachment_url = received_message.attachments[0].payload.url;
 
     response = helper.imgResponse();
-
   } else if (received_message.nlp.entities) {
-
     if (received_message.nlp.entities.intent) {
       intent = received_message.nlp.entities.intent[0].value;
       confidence = received_message.nlp.entities.intent[0].confidence;
 
       // get correct response according to nlp entity
       response = helper.intentResponse(intent, confidence, user_info, null);
-
-    } else if ( received_message.nlp.entities.greetings) {
-
+    } else if (received_message.nlp.entities.greetings) {
       let greeting = received_message.nlp.entities.greetings[0].value;
       confidence = received_message.nlp.entities.greetings[0].confidence;
 
       // get correct response according to nlp entity
       response = helper.intentResponse(null, confidence, user_info, greeting);
-
     } else {
-
       response = {
-        "text": ` I'm sorry ${ user_info && user_info.gender === 'male' ?  'Mr ' + user_info.first_name : 'Mrs ' + userInfo.first_name }, I didn't get that, can you rephrase?`
-      }
-
+        text: ` I'm sorry ${
+          user_info && user_info.gender === "male"
+            ? "Mr " + user_info.first_name
+            : "Mrs " + userInfo.first_name
+        }, I didn't get that, can you rephrase?`
+      };
     }
-
-  } 
+  }
 
   // Send the response message
-  exports.callSendAPI(sender_psid, response)
-
-}
+  exports.callSendAPI(sender_psid, response);
+};
 
 // Handles messaging_postbacks events
-exports.handlePostback = function (sender_psid, received_postback) {
+exports.handlePostback = function(sender_psid, received_postback) {
   let response;
-  
+
   // Get the payload for the postback
   let payload = received_postback.payload;
 
   // Set the response based on the postback payload
-  if (payload === 'marketing') {
-
-    response = { 
-      "text": `description about ${payload}`
-    }
-
-  } else if (payload === 'vidProd') {
-
+  if (payload === "marketing") {
     response = {
-      "text": `description about ${payload}`
-    }
-  } else if (payload === 'branding') {
-
-    response = { 
-      "text": `description about ${payload}`
-    }
-  } else if (payload === 'mobWebDev') {
-
-    response = { 
-      "text": `description about ${payload}`
-    }
-  } else if (payload === 'uxUi') {
-
-    response = { 
-      "text": `description about ${payload}`
-    }
-  } else if (payload === 'content') {
-
-    response = { 
-      "text": `description about ${payload}`
-    }
+      text: `description about ${payload}`
+    };
+  } else if (payload === "vidProd") {
+    response = {
+      text: `description about ${payload}`
+    };
+  } else if (payload === "branding") {
+    response = {
+      text: `description about ${payload}`
+    };
+  } else if (payload === "mobWebDev") {
+    response = {
+      text: `description about ${payload}`
+    };
+  } else if (payload === "uxUi") {
+    response = {
+      text: `description about ${payload}`
+    };
+  } else if (payload === "content") {
+    response = {
+      text: `description about ${payload}`
+    };
   } else {
     response = {
-      "text": `I didn't get that, can you rephrase?`
-    }
+      text: `I didn't get that, can you rephrase?`
+    };
   }
 
   // Send the message to acknowledge the postback
   exports.callSendAPI(sender_psid, response);
+};
 
-}
-
-exports.getUserInfo = async function (psid) {
+exports.getUserInfo = async function(psid) {
   // Send the HTTP request to the Messenger Platform
-  let url = "https://graph.facebook.com/" + psid + "?fields=first_name,last_name,timezone,gender" + "&access_token=" + PAGE_ACCESS_TOKEN;
+  let url =
+    "https://graph.facebook.com/" +
+    psid +
+    "?fields=first_name,last_name,timezone,gender" +
+    "&access_token=" +
+    PAGE_ACCESS_TOKEN;
 
-  try { 
-    let { data } = await axios.get(url)
-    return data
-  } catch(e) {
-    console.log(e)
+  try {
+    let { data } = await axios.get(url);
+    return data;
+  } catch (e) {
+    console.log(e);
   }
-
-}
+};

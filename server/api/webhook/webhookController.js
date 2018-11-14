@@ -1,7 +1,7 @@
 "use strict";
 
-const handler = require('./webhookHandlers'),
-  helper = require('./webhookHelpers');
+const handler = require("./webhookHandlers"),
+  helper = require("./webhookHelpers");
 // let init = false;
 
 // Creates the post request endpoint for our webhook
@@ -12,7 +12,6 @@ exports.post = (req, res) => {
   if (body.object === "page") {
     // Iterates over each entry - there may be multiple if batched
     body.entry.forEach(function(entry) {
-
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
       // console.log(webhook_event);
@@ -21,12 +20,11 @@ exports.post = (req, res) => {
       let sender_psid = webhook_event.sender.id;
       // console.log('Sender PSID: ' + sender_psid);
       let userInfo;
-      (async() => {
+      (async () => {
         userInfo = await handler.getUserInfo(sender_psid);
         // console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-
           // let immediateResponse = helper.urlButtonResponse();
 
           // if (!init) {
@@ -47,22 +45,16 @@ exports.post = (req, res) => {
 
           // } else {
 
-            handler.handleMessage(sender_psid, webhook_event.message, userInfo);
+          handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
           // }
-
         } else if (webhook_event.postback) {
-
           // Check if the event is a message or postback and
           // pass the event to the appropriate handler function
 
           handler.handlePostback(sender_psid, webhook_event.postback);
-
         }
-
       })();
-
-      
     });
 
     // Returns a '200 OK' response to all requests
@@ -73,11 +65,8 @@ exports.post = (req, res) => {
   }
 };
 
-
-
 // Recieve GET request in out api gateway
 exports.get = (req, res) => {
-
   let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
 
   // Parse the query params
@@ -89,14 +78,10 @@ exports.get = (req, res) => {
   if (mode && token) {
     // Checks the mode and token sent is correct
     if (mode === "subscribe" && token === VERIFY_TOKEN) {
-
       res.status(200).send(challenge);
-
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
     }
   }
-
 };
-

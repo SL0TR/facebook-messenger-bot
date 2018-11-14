@@ -1,6 +1,6 @@
 "use strict";
 
-require('dotenv').load();
+require("dotenv").load();
 
 var config = {
   port: process.env.PORT,

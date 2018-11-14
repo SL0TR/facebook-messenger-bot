@@ -1,11 +1,11 @@
 "use strict";
 
-const router = require('express').Router();
-const controller = require('./webhookController');
+const router = require("express").Router();
+const controller = require("./webhookController");
 
-
-router.route('/')
+router
+  .route("/")
   .get(controller.get)
-  .post(controller.post)
+  .post(controller.post);
 
 module.exports = router;
