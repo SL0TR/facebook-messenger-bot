@@ -1,7 +1,8 @@
 "use strict";
 
 const handler = require("./webhookHandlers"),
-  helper = require("./webhookHelpers");
+  PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+  // helper = require("./webhookHelpers");
 // let init = false;
 
 // Creates the post request endpoint for our webhook
@@ -67,7 +68,6 @@ exports.post = (req, res) => {
 
 // Recieve GET request in out api gateway
 exports.get = (req, res) => {
-  let VERIFY_TOKEN = PAGE_ACCESS_TOKEN;
 
   // Parse the query params
   let mode = req.query["hub.mode"];
@@ -77,7 +77,7 @@ exports.get = (req, res) => {
   // Checks if a token and mode is in the query string of the request
   if (mode && token) {
     // Checks the mode and token sent is correct
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
+    if (mode === "subscribe" && token === PAGE_ACCESS_TOKEN) {
       res.status(200).send(challenge);
     } else {
       // Responds with '403 Forbidden' if verify tokens do not match

@@ -69,7 +69,7 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
         text: ` I'm sorry ${
           user_info && user_info.gender === "male"
             ? "Mr " + user_info.first_name
-            : "Mrs " + userInfo.first_name
+            : "Mrs " + user_info.first_name
         }, I didn't get that, can you rephrase?`
       };
     }
