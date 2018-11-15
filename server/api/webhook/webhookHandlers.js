@@ -68,8 +68,8 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
       response = {
         text: ` I'm sorry ${
           user_info && user_info.gender === "male"
-            ? "Mr " + user_info.first_name
-            : "Mrs " + user_info.first_name
+            ? "Mr. " + user_info.first_name
+            : "Mrs. " + user_info.first_name
         }, I didn't get that, can you rephrase?`
       };
     }
@@ -88,29 +88,17 @@ exports.handlePostback = function(sender_psid, received_postback) {
 
   // Set the response based on the postback payload
   if (payload === "marketing") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else if (payload === "vidProd") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else if (payload === "branding") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else if (payload === "mobWebDev") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else if (payload === "uxUi") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else if (payload === "content") {
-    response = {
-      text: `description about ${payload}`
-    };
+    response = helper.intentResponse(payload);
   } else {
     response = {
       text: `I didn't get that, can you rephrase?`
