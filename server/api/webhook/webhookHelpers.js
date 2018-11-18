@@ -142,6 +142,7 @@ exports.portfolio = {
   ]
 };
 
+// make slide according to intent type
 exports.sliderMaker = function(category) {
   let arr = this[category].digiMarketing.map(el => {
     return {
@@ -203,7 +204,11 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
   } else if (type === "services") {
     response = this.btnListResponse(type);
   } else if (type === "instagram") {
-    response = this.urlButtonResponse();
+    response = this.urlButtonResponse(
+      "Thank you for getting in touch with us! We will get back to you soon, in the meantime you can stalk us on our Instagram",
+      "https://www.instagram.com/helloboomerang",
+      "Boomerang Instagram"
+    );
   } else if (type === "job") {
     response = {
       text: `We currently have these vacancies available, visit out site to know more.`
@@ -241,7 +246,9 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
       text: `description about ${type}`
     };
   } else if (type === "portfolio") {
-    response = this.sliderResponse(type);
+    response = this.btnListResponse(type);
+  } else if (type === "marketing-portfolio") {
+    response = this.sliderResponse("portfolio");
   } else {
     response = {
       text: ` I'm sorry ${
@@ -255,6 +262,7 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
   return response;
 };
 
+// An Image and associated text response
 exports.imgResponse = function() {
   let response;
 
@@ -264,7 +272,8 @@ exports.imgResponse = function() {
   return response;
 };
 
-exports.urlButtonResponse = function() {
+// URL Button response
+exports.urlButtonResponse = function(text, url, title) {
   let response;
 
   response = {
@@ -272,13 +281,12 @@ exports.urlButtonResponse = function() {
       type: "template",
       payload: {
         template_type: "button",
-        text:
-          "Thank you for getting in touch with us! We will get back to you soon, in the meantime you can stalk us on our Instagram",
+        text,
         buttons: [
           {
             type: "web_url",
-            url: "https://www.instagram.com/helloboomerang",
-            title: "Boomerang Instagram"
+            url,
+            title
           }
         ]
       }
@@ -301,6 +309,7 @@ exports.sliderResponse = function(type) {
   return response;
 };
 
+// List of button response(goes to postback in handlers)
 exports.btnListResponse = function(type) {
   let response;
 
@@ -348,6 +357,52 @@ exports.btnListResponse = function(type) {
                   type: "postback",
                   title: "Content",
                   payload: "content"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    };
+  } else if (type === "portfolio") {
+    response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "Digital arketing",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Digital arketing",
+                  payload: "marketing-portfolio"
+                },
+                {
+                  type: "postback",
+                  title: "Video Prduction",
+                  payload: "vidProd-portolio"
+                },
+                {
+                  type: "postback",
+                  title: "Branding",
+                  payload: "branding-portfolio"
+                }
+              ]
+            },
+            {
+              title: "Tech",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Mobile App and Web Development / Design",
+                  payload: "mobWebDev-portfolio"
+                },
+                {
+                  type: "postback",
+                  title: "Case Studies",
+                  payload: "case-portfolio"
                 }
               ]
             }

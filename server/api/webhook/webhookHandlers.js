@@ -99,6 +99,8 @@ exports.handlePostback = function(sender_psid, received_postback) {
     response = helper.intentResponse(payload);
   } else if (payload === "content") {
     response = helper.intentResponse(payload);
+  } else if (payload === "marketing-portfolio") {
+    response = helper.intentResponse(payload);
   } else {
     response = {
       text: `I didn't get that, can you rephrase?`
