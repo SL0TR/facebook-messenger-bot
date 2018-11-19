@@ -56,6 +56,15 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
       intent = received_message.nlp.entities.intent[0].value;
       confidence = received_message.nlp.entities.intent[0].confidence;
 
+      if (intent === "boomerang") {
+        response = helper.urlButtonResponse(
+          "We are a creative marketing agency who create practical, relevant and effective solutions for your business",
+          "https://www.boomerangbd.com/about-us/",
+          "About Us"
+        );
+        exports.callSendAPI(sender_psid, response);
+        response = helper.intentResponse(intent, confidence, user_info, null);
+      }
       // get correct response according to nlp entity
       response = helper.intentResponse(intent, confidence, user_info, null);
     } else if (received_message.nlp.entities.greetings) {
@@ -100,6 +109,14 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "content") {
     response = helper.intentResponse(payload);
   } else if (payload === "marketing-portfolio") {
+    response = helper.intentResponse(payload);
+  } else if (payload === "services") {
+    response = helper.intentResponse(payload);
+  } else if (payload === "clients") {
+    response = helper.intentResponse(payload);
+  } else if (payload === "assistance") {
+    response = helper.intentResponse(payload);
+  } else if (payload === "job") {
     response = helper.intentResponse(payload);
   } else {
     response = {

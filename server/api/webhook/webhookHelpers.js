@@ -2,7 +2,7 @@
 exports.portfolio = {
   digiMarketing: [
     {
-      title: "Disruption at launch, leading to a comprehensive brand presence",
+      title: "DIGITAL MARKETING FOR KRISPY KREME BANGLADESH",
       subTitle:
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
@@ -142,40 +142,50 @@ exports.portfolio = {
   ]
 };
 
-// make slide according to intent type
-exports.sliderMaker = function(category) {
-  let arr = this[category].digiMarketing.map(el => {
-    return {
-      title: el.title,
-      image_url: el.imgUrl,
-      subtitle: el.title,
-      default_action: {
-        type: "web_url",
-        url: el.url
-      },
-      buttons: [
-        {
-          type: "web_url",
-          url: el.url,
-          title: "View Full In Our Website"
-        }
-      ]
-    };
-  });
-
-  let response = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "generic",
-
-        elements: arr
-      }
-    }
-  };
-
-  return response;
-};
+exports.clients = [
+  {
+    title: "Area 120",
+    subTitle: "",
+    url: "https://area120.google.com",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2018/09/logo_client_area120.png"
+  },
+  {
+    title: "Telenor Health",
+    subTitle: "",
+    url: "https://www.boomerangbd.com/our-clients/",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_telenor_health.png"
+  },
+  {
+    title: "Bkash",
+    subTitle: "",
+    url: "https://www.boomerangbd.com/our-clients/",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
+  },
+  {
+    title: "Bkash",
+    subTitle: "",
+    url: "https://www.boomerangbd.com/our-clients/",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
+  },
+  {
+    title: "Bkash",
+    subTitle: "",
+    url: "https://www.boomerangbd.com/our-clients/",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
+  },
+  {
+    title: "View All",
+    subTitle: "",
+    url: "https://www.boomerangbd.com/our-clients/",
+    imgUrl:
+      "https://www.boomerangbd.com/wp-content/uploads/2016/10/image_banner_inner_get_in_touch.jpg"
+  }
+];
 
 // Check the type of intent the user sent in message
 exports.intentResponse = function(type, conf, userInfo, greet) {
@@ -210,9 +220,11 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
       "Boomerang Instagram"
     );
   } else if (type === "job") {
-    response = {
-      text: `We currently have these vacancies available, visit out site to know more.`
-    };
+    response = this.urlButtonResponse(
+      "Visit our site to see available vacancies. If you can't find anything, you can also apply your CV nonetheless.",
+      "https://www.boomerangbd.com/join-our-team/",
+      "Join Our Team!"
+    );
   } else if (type === "leave") {
     response = {
       text: `Goodbye and take care ${
@@ -247,8 +259,18 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
     };
   } else if (type === "portfolio") {
     response = this.btnListResponse(type);
+  } else if (type === "boomerang") {
+    response = this.btnListResponse(type);
   } else if (type === "marketing-portfolio") {
     response = this.sliderResponse("portfolio");
+  } else if (type === "clients") {
+    response = this.sliderResponse(type);
+  } else if (type === "blog") {
+    response = this.urlButtonResponse(
+      "Go ahead and read out blog!",
+      "https://www.boomerangbd.com/blog/",
+      "Our Blog"
+    );
   } else {
     response = {
       text: ` I'm sorry ${
@@ -305,6 +327,48 @@ exports.sliderResponse = function(type) {
   } else if (type === "clients") {
     response = this.sliderMaker(type);
   }
+
+  return response;
+};
+
+// make slide according to intent type
+exports.sliderMaker = function(category) {
+  let elements;
+
+  if (category === "portfolio") {
+    elements = this[category].digiMarketing;
+  } else if (category === "clients") {
+    elements = this[category];
+  }
+
+  elements = elements.map(el => {
+    return {
+      title: el.title,
+      image_url: el.imgUrl,
+      subtitle: el.subTitle,
+      default_action: {
+        type: "web_url",
+        url: el.url
+      },
+      buttons: [
+        {
+          type: "web_url",
+          url: el.url,
+          title: "View Details"
+        }
+      ]
+    };
+  });
+
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements
+      }
+    }
+  };
 
   return response;
 };
@@ -372,11 +436,11 @@ exports.btnListResponse = function(type) {
           template_type: "generic",
           elements: [
             {
-              title: "Digital arketing",
+              title: "Digital Marketing",
               buttons: [
                 {
                   type: "postback",
-                  title: "Digital arketing",
+                  title: "Digital Marketing",
                   payload: "marketing-portfolio"
                 },
                 {
@@ -403,6 +467,62 @@ exports.btnListResponse = function(type) {
                   type: "postback",
                   title: "Case Studies",
                   payload: "case-portfolio"
+                },
+                {
+                  type: "web_url",
+                  url: "https://www.boomerangbd.com/our-work/all/",
+                  title: "View All"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    };
+  } else if (type === "boomerang") {
+    response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "Click on the section you would like to know more about",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Our Services",
+                  payload: "services"
+                },
+                {
+                  type: "postback",
+                  title: "Our Portfolio",
+                  payload: "portfolio"
+                },
+                {
+                  type: "postback",
+                  title: "Our Clients",
+                  payload: "clients"
+                }
+              ]
+            },
+            {
+              title: "Click on the section you would like to know more about",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Available Jobs",
+                  payload: "job"
+                },
+                {
+                  type: "postback",
+                  title: "Need Assistance?",
+                  payload: "assistance"
+                },
+                {
+                  type: "web_url",
+                  url: "https://www.boomerangbd.com",
+                  title: "Visit Our Site"
                 }
               ]
             }
