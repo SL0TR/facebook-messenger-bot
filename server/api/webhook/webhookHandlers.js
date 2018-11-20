@@ -62,13 +62,15 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
           "https://www.boomerangbd.com/about-us/",
           "About Us"
         );
-        this.callSendAPI(sender_psid, response);
+        exports.callSendAPI(sender_psid, response);
+
         response = helper.intentResponse(intent, confidence, user_info, null);
+
         setTimeout(() => {
-          this.callSendAPI(sender_psid, response);
+          exports.callSendAPI(sender_psid, response);
         }, 1500);
 
-        return null;
+        return;
       }
       // get correct response according to nlp entity
       response = helper.intentResponse(intent, confidence, user_info, null);
@@ -87,24 +89,24 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
         }, I didn't get that, can you rephrase? Or you could navigate to any of these sections`
       };
 
-      this.callSendAPI(sender_psid, response);
+      exports.callSendAPI(sender_psid, response);
 
       response = helper.intentResponse(
         "boomerang",
-        confidence,
+        null,
         user_info,
         null
       );
       setTimeout(() => {
-        this.callSendAPI(sender_psid, response);
+        exports.callSendAPI(sender_psid, response);
       }, 1500);
 
-      return null;
+      return;
     }
   }
 
   // Send the response message
-  this.callSendAPI(sender_psid, response);
+  exports.callSendAPI(sender_psid, response);
 };
 
 // Handles messaging_postbacks events
@@ -146,7 +148,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   }
 
   // Send the message to acknowledge the postback
-  this.callSendAPI(sender_psid, response);
+  exports.callSendAPI(sender_psid, response);
 };
 
 exports.getUserInfo = async function(psid) {
