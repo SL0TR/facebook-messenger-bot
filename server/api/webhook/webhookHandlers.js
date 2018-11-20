@@ -62,8 +62,13 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
           "https://www.boomerangbd.com/about-us/",
           "About Us"
         );
-        exports.callSendAPI(sender_psid, response);
+        this.callSendAPI(sender_psid, response);
         response = helper.intentResponse(intent, confidence, user_info, null);
+        setTimeout(() => {
+          this.callSendAPI(sender_psid, response);
+        }, 1500);
+
+        return null;
       }
       // get correct response according to nlp entity
       response = helper.intentResponse(intent, confidence, user_info, null);
@@ -79,13 +84,23 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
           user_info && user_info.gender === "male"
             ? "Mr. " + user_info.first_name
             : "Mrs. " + user_info.first_name
-        }, I didn't get that, can you rephrase?`
+        }, I didn't get that, can you rephrase? Or you could navigate to any of these sections`
       };
+
+      this.callSendAPI(sender_psid, response);
+
+      response = helper.intentResponse("boomerang", confidence, user_info, null);
+        setTimeout(() => {
+          this.callSendAPI(sender_psid, response);
+        }, 1500);
+
+        return null;
+
     }
   }
 
   // Send the response message
-  exports.callSendAPI(sender_psid, response);
+  this.callSendAPI(sender_psid, response);
 };
 
 // Handles messaging_postbacks events
@@ -108,6 +123,8 @@ exports.handlePostback = function(sender_psid, received_postback) {
     response = helper.intentResponse(payload);
   } else if (payload === "content") {
     response = helper.intentResponse(payload);
+  } else if (payload === "portfolio") {
+    response = helper.intentResponse(payload);
   } else if (payload === "marketing-portfolio") {
     response = helper.intentResponse(payload);
   } else if (payload === "services") {
@@ -125,7 +142,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   }
 
   // Send the message to acknowledge the postback
-  exports.callSendAPI(sender_psid, response);
+  this.callSendAPI(sender_psid, response);
 };
 
 exports.getUserInfo = async function(psid) {

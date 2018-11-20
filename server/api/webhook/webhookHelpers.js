@@ -259,6 +259,8 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
     };
   } else if (type === "portfolio") {
     response = this.btnListResponse(type);
+  }  else if (type === "assistance") {
+    response = this.callBtnResponse("Need further assistance? Talk to a representive", "Call representitive", "0123213232");
   } else if (type === "boomerang") {
     response = this.btnListResponse(type);
   } else if (type === "marketing-portfolio") {
@@ -330,6 +332,30 @@ exports.sliderResponse = function(type) {
 
   return response;
 };
+
+exports.callBtnResponse = function(text, title, payload) {
+  let response;
+
+  response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "button",
+        text,
+        buttons: [
+          {
+            type: "phone_number",
+            title,
+            payload
+          }
+        ]
+      }
+    }
+  };
+
+  return response;
+
+}
 
 // make slide according to intent type
 exports.sliderMaker = function(category) {
