@@ -89,13 +89,17 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
 
       this.callSendAPI(sender_psid, response);
 
-      response = helper.intentResponse("boomerang", confidence, user_info, null);
-        setTimeout(() => {
-          this.callSendAPI(sender_psid, response);
-        }, 1500);
+      response = helper.intentResponse(
+        "boomerang",
+        confidence,
+        user_info,
+        null
+      );
+      setTimeout(() => {
+        this.callSendAPI(sender_psid, response);
+      }, 1500);
 
-        return null;
-
+      return null;
     }
   }
 

@@ -259,8 +259,12 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
     };
   } else if (type === "portfolio") {
     response = this.btnListResponse(type);
-  }  else if (type === "assistance") {
-    response = this.callBtnResponse("Need further assistance? Talk to a representive", "Call representitive", "0123213232");
+  } else if (type === "assistance") {
+    response = this.callBtnResponse(
+      "Need further assistance? Talk to a representive",
+      "Call representitive",
+      "0123213232"
+    );
   } else if (type === "boomerang") {
     response = this.btnListResponse(type);
   } else if (type === "marketing-portfolio") {
@@ -354,8 +358,7 @@ exports.callBtnResponse = function(text, title, payload) {
   };
 
   return response;
-
-}
+};
 
 // make slide according to intent type
 exports.sliderMaker = function(category) {
