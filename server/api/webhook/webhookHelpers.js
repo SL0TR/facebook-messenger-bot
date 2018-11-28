@@ -1,4 +1,5 @@
 "use strict";
+const axios = require("axios");
 exports.portfolio = {
   digiMarketing: [
     {
@@ -7,7 +8,7 @@ exports.portfolio = {
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
     },
     {
@@ -16,7 +17,7 @@ exports.portfolio = {
         "Effective online campaign development and strategies to enhance brand awareness",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
     },
     {
@@ -24,7 +25,7 @@ exports.portfolio = {
       subTitle: "Digital branding and enhancement of awareness on social media",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
     }
   ],
@@ -35,7 +36,7 @@ exports.portfolio = {
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
     },
     {
@@ -44,7 +45,7 @@ exports.portfolio = {
         "Effective online campaign development and strategies to enhance brand awareness",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
     },
     {
@@ -52,7 +53,7 @@ exports.portfolio = {
       subTitle: "Digital branding and enhancement of awareness on social media",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
     }
   ],
@@ -63,7 +64,7 @@ exports.portfolio = {
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
     },
     {
@@ -72,7 +73,7 @@ exports.portfolio = {
         "Effective online campaign development and strategies to enhance brand awareness",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
     },
     {
@@ -80,7 +81,7 @@ exports.portfolio = {
       subTitle: "Digital branding and enhancement of awareness on social media",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
     }
   ],
@@ -91,7 +92,7 @@ exports.portfolio = {
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
     },
     {
@@ -100,7 +101,7 @@ exports.portfolio = {
         "Effective online campaign development and strategies to enhance brand awareness",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
     },
     {
@@ -108,7 +109,7 @@ exports.portfolio = {
       subTitle: "Digital branding and enhancement of awareness on social media",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
     }
   ],
@@ -119,7 +120,7 @@ exports.portfolio = {
         "Disruption at launch, leading to a comprehensive brand presence",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
     },
     {
@@ -128,7 +129,7 @@ exports.portfolio = {
         "Effective online campaign development and strategies to enhance brand awareness",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
     },
     {
@@ -136,7 +137,7 @@ exports.portfolio = {
       subTitle: "Digital branding and enhancement of awareness on social media",
       url:
         "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      imgUrl:
+      img:
         "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
     }
   ]
@@ -147,42 +148,42 @@ exports.clients = [
     title: "Area 120",
     subTitle: "",
     url: "https://area120.google.com",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2018/09/logo_client_area120.png"
   },
   {
     title: "Telenor Health",
     subTitle: "",
     url: "https://www.boomerangbd.com/our-clients/",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_telenor_health.png"
   },
   {
     title: "Bkash",
     subTitle: "",
     url: "https://www.boomerangbd.com/our-clients/",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
   },
   {
     title: "Bkash",
     subTitle: "",
     url: "https://www.boomerangbd.com/our-clients/",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
   },
   {
     title: "Bkash",
     subTitle: "",
     url: "https://www.boomerangbd.com/our-clients/",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
   },
   {
     title: "View All",
     subTitle: "",
     url: "https://www.boomerangbd.com/our-clients/",
-    imgUrl:
+    img:
       "https://www.boomerangbd.com/wp-content/uploads/2016/10/image_banner_inner_get_in_touch.jpg"
   }
 ];
@@ -324,6 +325,7 @@ exports.urlButtonResponse = function(text, url, title) {
   return response;
 };
 
+
 // Slider or Carousel response in Messenger
 exports.sliderResponse = function(type) {
   let response;
@@ -337,35 +339,50 @@ exports.sliderResponse = function(type) {
   return response;
 };
 
-exports.callBtnResponse = function(text, title, payload) {
-  let response;
-
-  response = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "button",
-        text,
-        buttons: [
-          {
-            type: "phone_number",
-            title,
-            payload
-          }
-        ]
-      }
-    }
-  };
-
-  return response;
-};
 
 // make slide according to intent type
-exports.sliderMaker = function(category) {
+exports.sliderMaker = category => {
   let elements;
 
   if (category === "portfolio") {
+    // const getPortfoliodata = async () => {
+    //   let { data } = await axios.get("https://boomerangbd.com/wp-json/bot-api/v2/portfolio");
+    //   return data;
+    // }
+    // let slides = await getPortfoliodata();
+    // elements = slides.map(el => {
+    //   return {
+    //     title: el.title,
+    //     image_url: el.img,
+    //     subtitle: el.subtitle,
+    //     default_action: {
+    //       type: "web_url",
+    //       url: el.url
+    //     },
+    //     buttons: [
+    //       {
+    //         type: "web_url",
+    //         url: el.url,
+    //         title: "View Details"
+    //       }
+    //     ]
+    //   };
+    // });
+  
+    // let response = {
+    //   attachment: {
+    //     type: "template",
+    //     payload: {
+    //       template_type: "generic",
+    //       elements
+    //     }
+    //   }
+    // };
+  
+    // return response;
+
     elements = this[category].digiMarketing;
+    
   } else if (category === "clients") {
     elements = this[category];
   }
@@ -373,8 +390,8 @@ exports.sliderMaker = function(category) {
   elements = elements.map(el => {
     return {
       title: el.title,
-      image_url: el.imgUrl,
-      subtitle: el.subTitle,
+      image_url: el.img,
+      subtitle: el.subtitle,
       default_action: {
         type: "web_url",
         url: el.url
@@ -395,6 +412,30 @@ exports.sliderMaker = function(category) {
       payload: {
         template_type: "generic",
         elements
+      }
+    }
+  };
+
+  return response;
+};
+
+// Call Button Response
+exports.callBtnResponse = function(text, title, payload) {
+  let response;
+
+  response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "button",
+        text,
+        buttons: [
+          {
+            type: "phone_number",
+            title,
+            payload
+          }
+        ]
       }
     }
   };

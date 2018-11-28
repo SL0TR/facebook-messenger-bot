@@ -1,13 +1,11 @@
 const express = require("express"),
   app = express(),
   err = require("./middleware/err"),
-  api = require("./api/api");
+  api = require("./api/api"),
+  axios = require("axios");
 
 // Setup the app middlware
 require("./middleware/appMiddleware")(app);
-
-// Fire controller
-// messengerWebbhookController(app);
 
 // serve static files
 app.use(express.static("public"));

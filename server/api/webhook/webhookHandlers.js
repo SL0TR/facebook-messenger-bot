@@ -36,7 +36,7 @@ exports.callSendAPI = async function(sender_psid, response) {
   try {
     await axios.post(url, request_body);
   } catch (e) {
-    console.log(e);
+    console.log(e.response);
   }
 };
 

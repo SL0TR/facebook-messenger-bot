@@ -2,8 +2,6 @@
 
 const handler = require("./webhookHandlers"),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-// helper = require("./webhookHelpers");
-// let init = false;
 
 // Creates the post request endpoint for our webhook
 exports.post = (req, res) => {
@@ -26,25 +24,6 @@ exports.post = (req, res) => {
         // console.dir(userInfo, null, true)
 
         if (webhook_event.message) {
-          // let immediateResponse = helper.urlButtonResponse();
-
-          // if (!init) {
-
-          //   handler.callSendAPI(sender_psid, immediateResponse)
-          //   init = true;
-
-          //   // send nlp response after certain time(minutes)
-          //   const minutes = 1;
-          //   const delay = minutes * 60 * 1000;
-
-          //   setTimeout(function() {
-
-          //     //console.log('NLP FIRED!')
-          //     handler.handleMessage(sender_psid, webhook_event.message, userInfo);
-
-          //   }, delay);
-
-          // } else {
 
           handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
