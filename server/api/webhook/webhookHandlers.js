@@ -150,7 +150,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "assistance") {
     response = helper.intentResponse(payload);
   } else if (payload === "job") {
-    response = helper.intentResponse(payload);
+    helper.jobResponse(sender_psid, payload);
   } else {
     response = {
       text: `I didn't get that, can you rephrase?`

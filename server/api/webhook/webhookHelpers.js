@@ -1,193 +1,6 @@
 "use strict";
 const axios = require("axios"),
   handlers = require('./webhookHandlers.js');
-exports.portfolio = {
-  digiMarketing: [
-    {
-      title: "DIGITAL MARKETING FOR KRISPY KREME BANGLADESH",
-      subTitle:
-        "Disruption at launch, leading to a comprehensive brand presence",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR GREEN DELTA INSURANCE COMPANY",
-      subTitle:
-        "Effective online campaign development and strategies to enhance brand awareness",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR AMAZE POWER",
-      subTitle: "Digital branding and enhancement of awareness on social media",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
-    }
-  ],
-  vidPhotography: [
-    {
-      title: "Disruption at launch, leading to a comprehensive brand presence",
-      subTitle:
-        "Disruption at launch, leading to a comprehensive brand presence",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR GREEN DELTA INSURANCE COMPANY",
-      subTitle:
-        "Effective online campaign development and strategies to enhance brand awareness",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR AMAZE POWER",
-      subTitle: "Digital branding and enhancement of awareness on social media",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
-    }
-  ],
-  webMobile: [
-    {
-      title: "Disruption at launch, leading to a comprehensive brand presence",
-      subTitle:
-        "Disruption at launch, leading to a comprehensive brand presence",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR GREEN DELTA INSURANCE COMPANY",
-      subTitle:
-        "Effective online campaign development and strategies to enhance brand awareness",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR AMAZE POWER",
-      subTitle: "Digital branding and enhancement of awareness on social media",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
-    }
-  ],
-  brandPrint: [
-    {
-      title: "Disruption at launch, leading to a comprehensive brand presence",
-      subTitle:
-        "Disruption at launch, leading to a comprehensive brand presence",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR GREEN DELTA INSURANCE COMPANY",
-      subTitle:
-        "Effective online campaign development and strategies to enhance brand awareness",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR AMAZE POWER",
-      subTitle: "Digital branding and enhancement of awareness on social media",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
-    }
-  ],
-  caseStudies: [
-    {
-      title: "Disruption at launch, leading to a comprehensive brand presence",
-      subTitle:
-        "Disruption at launch, leading to a comprehensive brand presence",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-krispy-kreme-bangladesh/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2016/11/image_project_featured_digital_marketing_krispy_kreme.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR GREEN DELTA INSURANCE COMPANY",
-      subTitle:
-        "Effective online campaign development and strategies to enhance brand awareness",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-green-delta-insurance-company/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/image_project_featured_digital_marketing_green_delta.jpg"
-    },
-    {
-      title: "DIGITAL MARKETING FOR AMAZE POWER",
-      subTitle: "Digital branding and enhancement of awareness on social media",
-      url:
-        "https://www.boomerangbd.com/our-work/digital-marketing/digital-marketing-amaze-power/",
-      img:
-        "https://www.boomerangbd.com/wp-content/uploads/2017/03/image_project_thumbnail_digitalMarketing_amazePower.jpg"
-    }
-  ]
-};
-
-exports.clients = [
-  {
-    title: "Area 120",
-    subTitle: "",
-    url: "https://area120.google.com",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2018/09/logo_client_area120.png"
-  },
-  {
-    title: "Telenor Health",
-    subTitle: "",
-    url: "https://www.boomerangbd.com/our-clients/",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_telenor_health.png"
-  },
-  {
-    title: "Bkash",
-    subTitle: "",
-    url: "https://www.boomerangbd.com/our-clients/",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
-  },
-  {
-    title: "Bkash",
-    subTitle: "",
-    url: "https://www.boomerangbd.com/our-clients/",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
-  },
-  {
-    title: "Bkash",
-    subTitle: "",
-    url: "https://www.boomerangbd.com/our-clients/",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2016/08/logo_client_bkash.png"
-  },
-  {
-    title: "View All",
-    subTitle: "",
-    url: "https://www.boomerangbd.com/our-clients/",
-    img:
-      "https://www.boomerangbd.com/wp-content/uploads/2016/10/image_banner_inner_get_in_touch.jpg"
-  }
-];
 
 // Check the type of intent the user sent in message
 exports.intentResponse = function(type, conf, userInfo, greet) {
@@ -222,11 +35,7 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
       "Boomerang Instagram"
     );
   } else if (type === "job") {
-    response = this.urlButtonResponse(
-      "Visit our site to see available vacancies. If you can't find anything, you can also apply your CV nonetheless.",
-      "https://www.boomerangbd.com/join-our-team/",
-      "Join Our Team!"
-    );
+    response = this.jobResponse();
   } else if (type === "leave") {
     response = {
       text: `Goodbye and take care ${
@@ -361,7 +170,6 @@ exports.sliderMaker = (psid, category, url) => {
 
     let elements = slides.map(el => {
       let { title, img: image_url, url, subtitle } = el;
-      console.log(el);
 
       if (title.search("&#8217;") > -1) {
         title = title = title.replace("&#8217;", "'");
@@ -402,6 +210,48 @@ exports.sliderMaker = (psid, category, url) => {
   })();
 
 };
+
+exports.jobResponse = function (psid, cat) {
+
+  (async () => {
+  
+    try {
+      var { data } = await axios.get("https://boomerangbd.com/wp-json/bot-api/v2/jobs");
+      // console.log(data);
+      let jobs = data.filter(el => el.title !== "Apply Now");
+
+      let response = {
+        text: `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble`
+        // "attachment":{
+        //   "type":"template",
+        //   "payload":{
+        //     template_type: "button",
+        //     text: `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble`,
+        //     buttons:[
+        //       {
+        //         "type":"web_url",
+        //         "url":"https://www.messenger.com",
+        //         "title":"Visit Messenger"
+        //       }
+        //     ]
+        //   }
+        // }
+      }
+      handlers.callSendAPI(psid, response);
+
+      // let response = this.urlButtonResponse(
+      //   "Visit our site to see available vacancies. If you can't find anything, you can also apply your CV nonetheless.",
+      //   "https://www.boomerangbd.com/join-our-team/",
+      //   "Join Our Team!"
+      // );
+
+    } catch(e) {
+      console.log(e)
+    }
+  
+  })();
+
+}
 
 // Call Button Response
 exports.callBtnResponse = function(text, title, payload) {
