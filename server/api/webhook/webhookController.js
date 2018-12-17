@@ -27,7 +27,6 @@ exports.post = (req, res) => {
 
           handler.handleMessage(sender_psid, webhook_event.message, userInfo);
 
-          // }
         } else if (webhook_event.postback) {
           // Check if the event is a message or postback and
           // pass the event to the appropriate handler function

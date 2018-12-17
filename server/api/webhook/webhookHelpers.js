@@ -1,5 +1,6 @@
 "use strict";
-const axios = require("axios");
+const axios = require("axios"),
+  handlers = require('./webhookHandlers.js');
 exports.portfolio = {
   digiMarketing: [
     {
@@ -268,10 +269,6 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
     );
   } else if (type === "boomerang") {
     response = this.btnListResponse(type);
-  } else if (type === "marketing-portfolio") {
-    response = this.sliderResponse("portfolio");
-  } else if (type === "clients") {
-    response = this.sliderResponse(type);
   } else if (type === "blog") {
     response = this.urlButtonResponse(
       "Go ahead and read out blog!",
@@ -327,96 +324,83 @@ exports.urlButtonResponse = function(text, url, title) {
 
 
 // Slider or Carousel response in Messenger
-exports.sliderResponse = function(type) {
-  let response;
+exports.sliderResponse = function(psid, category) {
 
-  if (type === "portfolio") {
-    response = this.sliderMaker(type);
-  } else if (type === "clients") {
-    response = this.sliderMaker(type);
+  if (category === "marketing-portfolio" || category === "mobWebDev-portfolio" ||  category === "vidProd-portolio" || category === "case-portfolio" || category === "branding-portfolio") {
+    this.sliderMaker(psid, category, "https://boomerangbd.com/wp-json/bot-api/v2/portfolio");
+  } else if (category === "clients") {
+    this.sliderMaker(psid, category, "https://boomerangbd.com/wp-json/bot-api/v2/clients" );
   }
-
-  return response;
 };
 
 
 // make slide according to intent type
-exports.sliderMaker = category => {
-  let elements;
+exports.sliderMaker = (psid, category, url) => {
+  let slides;
 
-  if (category === "portfolio") {
-    // const getPortfoliodata = async () => {
-    //   let { data } = await axios.get("https://boomerangbd.com/wp-json/bot-api/v2/portfolio");
-    //   return data;
-    // }
-    // let slides = await getPortfoliodata();
-    // elements = slides.map(el => {
-    //   return {
-    //     title: el.title,
-    //     image_url: el.img,
-    //     subtitle: el.subtitle,
-    //     default_action: {
-    //       type: "web_url",
-    //       url: el.url
-    //     },
-    //     buttons: [
-    //       {
-    //         type: "web_url",
-    //         url: el.url,
-    //         title: "View Details"
-    //       }
-    //     ]
-    //   };
-    // });
-  
-    // let response = {
-    //   attachment: {
-    //     type: "template",
-    //     payload: {
-    //       template_type: "generic",
-    //       elements
-    //     }
-    //   }
-    // };
-  
-    // return response;
-
-    elements = this[category].digiMarketing;
-    
-  } else if (category === "clients") {
-    elements = this[category];
-  }
-
-  elements = elements.map(el => {
-    return {
-      title: el.title,
-      image_url: el.img,
-      subtitle: el.subtitle,
-      default_action: {
-        type: "web_url",
-        url: el.url
-      },
-      buttons: [
-        {
-          type: "web_url",
-          url: el.url,
-          title: "View Details"
-        }
-      ]
-    };
-  });
-
-  let response = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "generic",
-        elements
-      }
+  (async () => {
+    try {
+      var { data } = await axios.get(url);
+    } catch(e) {
+      console.log(e)
     }
-  };
 
-  return response;
+    if (category === "marketing-portfolio") {
+      slides = data.filter(el => el.cat === "Digital Marketing");
+    } else if (category === "vidProd-portolio") {
+      slides = data.filter(el => el.cat === "Video &amp; Photography");
+    } else if (category === "mobWebDev-portfolio") {
+      slides = data.filter(el => el.cat === "Web &amp; Mobile Apps");
+    } else if (category === "case-portfolio") {
+      slides = data.filter(el => el.cat === "Case Studies");
+    } else if (category === "branding-portfolio") {
+      slides = data.filter(el => el.cat === "Branding &amp; Print");
+    } else if ( category === "clients") {
+      slides = data;
+    }
+
+    let elements = slides.map(el => {
+      let { title, img: image_url, url, subtitle } = el;
+      console.log(el);
+
+      if (title.search("&#8217;") > -1) {
+        title = title = title.replace("&#8217;", "'");
+      } else if (title.search("&#038;") > -1 ) {
+        title = title.replace("&#038;", "&") ;
+      }
+
+      return {
+        title,
+        image_url,
+        subtitle: subtitle || "Boomerang Digital Clients",
+        default_action: {
+          type: "web_url",
+          url: url || "https://www.boomerangbd.com"
+        },
+        buttons: [
+          {
+            type: "web_url",
+            url: url || "https://www.boomerangbd.com",
+            title: "View Details"
+          }
+        ]
+      };
+    });
+  
+    let response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements
+        }
+      }
+    };
+
+    handlers.callSendAPI(psid, response);
+
+  })();
+
 };
 
 // Call Button Response
@@ -515,7 +499,7 @@ exports.btnListResponse = function(type) {
                 },
                 {
                   type: "postback",
-                  title: "Video Prduction",
+                  title: "Video Production",
                   payload: "vidProd-portolio"
                 },
                 {

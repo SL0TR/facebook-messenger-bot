@@ -36,7 +36,7 @@ exports.callSendAPI = async function(sender_psid, response) {
   try {
     await axios.post(url, request_body);
   } catch (e) {
-    console.log(e.response);
+    console.log("error code! : ", e.response.status);
   }
 };
 
@@ -132,7 +132,17 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "portfolio") {
     response = helper.intentResponse(payload);
   } else if (payload === "marketing-portfolio") {
-    response = helper.intentResponse(payload);
+    helper.sliderResponse(sender_psid, payload);
+  } else if (payload === "vidProd-portolio") {
+    helper.sliderResponse(sender_psid, payload);
+  } else if (payload === "mobWebDev-portfolio") {
+    helper.sliderResponse(sender_psid, payload);
+  } else if (payload === "case-portfolio") {
+    helper.sliderResponse(sender_psid, payload);
+  } else if (payload === "branding-portfolio") {
+    helper.sliderResponse(sender_psid, payload);
+  } else if (payload === "clients") {
+    helper.sliderResponse(sender_psid, payload);
   } else if (payload === "services") {
     response = helper.intentResponse(payload);
   } else if (payload === "clients") {
