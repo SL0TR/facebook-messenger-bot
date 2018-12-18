@@ -1,8 +1,7 @@
 const express = require("express"),
   app = express(),
   err = require("./middleware/err"),
-  api = require("./api/api"),
-  axios = require("axios");
+  api = require("./api/api");
 
 // Setup the app middlware
 require("./middleware/appMiddleware")(app);

@@ -91,12 +91,7 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
 
       exports.callSendAPI(sender_psid, response);
 
-      response = helper.intentResponse(
-        "boomerang",
-        null,
-        user_info,
-        null
-      );
+      response = helper.intentResponse("boomerang", null, user_info, null);
       setTimeout(() => {
         exports.callSendAPI(sender_psid, response);
       }, 1500);
@@ -150,7 +145,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "assistance") {
     response = helper.intentResponse(payload);
   } else if (payload === "job") {
-    helper.jobResponse(sender_psid, payload);
+    helper.jobResponse(sender_psid);
   } else {
     response = {
       text: `I didn't get that, can you rephrase?`

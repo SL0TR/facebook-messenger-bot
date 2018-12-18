@@ -1,6 +1,6 @@
 "use strict";
 const axios = require("axios"),
-  handlers = require('./webhookHandlers.js');
+  handlers = require("./webhookHandlers.js");
 
 // Check the type of intent the user sent in message
 exports.intentResponse = function(type, conf, userInfo, greet) {
@@ -131,17 +131,28 @@ exports.urlButtonResponse = function(text, url, title) {
   return response;
 };
 
-
 // Slider or Carousel response in Messenger
 exports.sliderResponse = function(psid, category) {
-
-  if (category === "marketing-portfolio" || category === "mobWebDev-portfolio" ||  category === "vidProd-portolio" || category === "case-portfolio" || category === "branding-portfolio") {
-    this.sliderMaker(psid, category, "https://boomerangbd.com/wp-json/bot-api/v2/portfolio");
+  if (
+    category === "marketing-portfolio" ||
+    category === "mobWebDev-portfolio" ||
+    category === "vidProd-portolio" ||
+    category === "case-portfolio" ||
+    category === "branding-portfolio"
+  ) {
+    this.sliderMaker(
+      psid,
+      category,
+      "https://boomerangbd.com/wp-json/bot-api/v2/portfolio"
+    );
   } else if (category === "clients") {
-    this.sliderMaker(psid, category, "https://boomerangbd.com/wp-json/bot-api/v2/clients" );
+    this.sliderMaker(
+      psid,
+      category,
+      "https://boomerangbd.com/wp-json/bot-api/v2/clients"
+    );
   }
 };
-
 
 // make slide according to intent type
 exports.sliderMaker = (psid, category, url) => {
@@ -150,8 +161,8 @@ exports.sliderMaker = (psid, category, url) => {
   (async () => {
     try {
       var { data } = await axios.get(url);
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
 
     if (category === "marketing-portfolio") {
@@ -164,7 +175,7 @@ exports.sliderMaker = (psid, category, url) => {
       slides = data.filter(el => el.cat === "Case Studies");
     } else if (category === "branding-portfolio") {
       slides = data.filter(el => el.cat === "Branding &amp; Print");
-    } else if ( category === "clients") {
+    } else if (category === "clients") {
       slides = data;
     }
 
@@ -173,8 +184,8 @@ exports.sliderMaker = (psid, category, url) => {
 
       if (title.search("&#8217;") > -1) {
         title = title = title.replace("&#8217;", "'");
-      } else if (title.search("&#038;") > -1 ) {
-        title = title.replace("&#038;", "&") ;
+      } else if (title.search("&#038;") > -1) {
+        title = title.replace("&#038;", "&");
       }
 
       return {
@@ -194,7 +205,7 @@ exports.sliderMaker = (psid, category, url) => {
         ]
       };
     });
-  
+
     let response = {
       attachment: {
         type: "template",
@@ -206,22 +217,22 @@ exports.sliderMaker = (psid, category, url) => {
     };
 
     handlers.callSendAPI(psid, response);
-
   })();
-
 };
 
-exports.jobResponse = function (psid, cat) {
-
+exports.jobResponse = function(psid) {
   (async () => {
-  
     try {
-      var { data } = await axios.get("https://boomerangbd.com/wp-json/bot-api/v2/jobs");
+      var { data } = await axios.get(
+        "https://boomerangbd.com/wp-json/bot-api/v2/jobs"
+      );
       // console.log(data);
       let jobs = data.filter(el => el.title !== "Apply Now");
 
       let response = {
-        text: `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble`
+        text: `There's ${jobs.length > 0 ? jobs.length : "no"} ${
+          jobs.length > 1 ? "vacanvies" : "vacancy"
+        } availble`
         // "attachment":{
         //   "type":"template",
         //   "payload":{
@@ -236,7 +247,7 @@ exports.jobResponse = function (psid, cat) {
         //     ]
         //   }
         // }
-      }
+      };
       handlers.callSendAPI(psid, response);
 
       // let response = this.urlButtonResponse(
@@ -244,14 +255,11 @@ exports.jobResponse = function (psid, cat) {
       //   "https://www.boomerangbd.com/join-our-team/",
       //   "Join Our Team!"
       // );
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  
   })();
-
-}
+};
 
 // Call Button Response
 exports.callBtnResponse = function(text, title, payload) {
