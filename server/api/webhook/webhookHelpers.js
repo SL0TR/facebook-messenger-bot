@@ -3,7 +3,7 @@ const axios = require("axios"),
   handlers = require("./webhookHandlers.js");
 
 // Check the type of intent the user sent in message
-exports.intentResponse = function(type, conf, userInfo, greet) {
+exports.intentResponse = function(type, conf, userInfo, greet, psid) {
   let response;
 
   if (greet && greet === "true") {
@@ -35,7 +35,8 @@ exports.intentResponse = function(type, conf, userInfo, greet) {
       "Boomerang Instagram"
     );
   } else if (type === "job") {
-    response = this.jobResponse();
+    this.jobResponse(psid);
+    return;
   } else if (type === "leave") {
     response = {
       text: `Goodbye and take care ${
@@ -201,6 +202,11 @@ exports.sliderMaker = (psid, category, url) => {
             type: "web_url",
             url: url || "https://www.boomerangbd.com",
             title: "View Details"
+          },
+          {
+            type: "postback",
+            title: "Go back to portfolio",
+            payload: "portfolio"
           }
         ]
       };
@@ -220,45 +226,61 @@ exports.sliderMaker = (psid, category, url) => {
   })();
 };
 
-exports.jobResponse = function(psid) {
-  (async () => {
-    try {
-      var { data } = await axios.get(
-        "https://boomerangbd.com/wp-json/bot-api/v2/jobs"
-      );
-      // console.log(data);
-      let jobs = data.filter(el => el.title !== "Apply Now");
+exports.jobResponse = async function(psid) {
+  let response, buttons, text;
 
-      let response = {
-        text: `There's ${jobs.length > 0 ? jobs.length : "no"} ${
-          jobs.length > 1 ? "vacanvies" : "vacancy"
-        } availble`
-        // "attachment":{
-        //   "type":"template",
-        //   "payload":{
-        //     template_type: "button",
-        //     text: `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble`,
-        //     buttons:[
-        //       {
-        //         "type":"web_url",
-        //         "url":"https://www.messenger.com",
-        //         "title":"Visit Messenger"
-        //       }
-        //     ]
-        //   }
-        // }
-      };
-      handlers.callSendAPI(psid, response);
+  const defaultBtn = [{
+    type: "web_url",
+    url: "https://www.boomerangbd.com/drop-your-cv/",
+    title: "Drop Your CV"
+  }]
 
-      // let response = this.urlButtonResponse(
-      //   "Visit our site to see available vacancies. If you can't find anything, you can also apply your CV nonetheless.",
-      //   "https://www.boomerangbd.com/join-our-team/",
-      //   "Join Our Team!"
-      // );
-    } catch (e) {
-      console.log(e);
+  const btnMaker = arr => {
+    let btnList = arr.map(el => {
+      let { url, title } = el;
+      return {
+        type: "web_url",
+        url,
+        title
+      }
+    });
+
+    return btnList;
+  }
+
+  try {
+    var { data } = await axios.get(
+      "https://boomerangbd.com/wp-json/bot-api/v2/jobs"
+    );
+
+    let jobs = data.filter(el => el.title !== "Apply Now");
+
+    if ( jobs.length > 0) {
+      let jobBtns = btnMaker(jobs);
+      buttons = [...jobBtns, ...defaultBtn];
+      text = `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble. If you don't find the appropriate position on the vacancy you can still apply with drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`
+    } else {
+      text = `There's no job oppenings availble currently but you can still drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`
+      buttons = [...defaultBtn];
     }
-  })();
+
+    response = {
+      attachment:{
+        type: "template",
+        payload:{
+          template_type: "button",
+          text,
+          buttons
+        }
+      }
+    };
+
+    handlers.callSendAPI(psid, response);
+
+  } catch (e) {
+    console.log(e);
+  }
+
 };
 
 // Call Button Response

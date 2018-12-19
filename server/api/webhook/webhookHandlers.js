@@ -63,7 +63,6 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
           "About Us"
         );
         exports.callSendAPI(sender_psid, response);
-
         response = helper.intentResponse(intent, confidence, user_info, null);
 
         setTimeout(() => {
@@ -73,7 +72,7 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
         return;
       }
       // get correct response according to nlp entity
-      response = helper.intentResponse(intent, confidence, user_info, null);
+      response = helper.intentResponse(intent, confidence, user_info, null, sender_psid);
     } else if (received_message.nlp.entities.greetings) {
       let greeting = received_message.nlp.entities.greetings[0].value;
       confidence = received_message.nlp.entities.greetings[0].confidence;
@@ -145,7 +144,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "assistance") {
     response = helper.intentResponse(payload);
   } else if (payload === "job") {
-    helper.jobResponse(sender_psid);
+    helper.intentResponse(payload, null, null, null, sender_psid);
   } else {
     response = {
       text: `I didn't get that, can you rephrase?`
