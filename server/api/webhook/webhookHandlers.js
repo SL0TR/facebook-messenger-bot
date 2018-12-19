@@ -1,8 +1,7 @@
 "use strict";
 
-const helper = require("./webhookHelpers");
-
-const axios = require("axios"),
+const helper = require("./webhookHelpers"),
+  axios = require("axios"),
   PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 // Send response back with post request to facebook api
@@ -72,7 +71,14 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
         return;
       }
       // get correct response according to nlp entity
-      response = helper.intentResponse(intent, confidence, user_info, null, sender_psid);
+      response = helper.intentResponse(
+        intent,
+        confidence,
+        user_info,
+        null,
+        sender_psid
+      );
+      console.log(response);
     } else if (received_message.nlp.entities.greetings) {
       let greeting = received_message.nlp.entities.greetings[0].value;
       confidence = received_message.nlp.entities.greetings[0].confidence;
@@ -142,7 +148,12 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "clients") {
     response = helper.intentResponse(payload);
   } else if (payload === "assistance") {
-    response = helper.intentResponse(payload);
+    (async() => {
+      let uInfo = await this.getUserInfo(sender_psid);
+      response = helper.intentResponse(payload, null, uInfo);
+      exports.callSendAPI(sender_psid, response);
+    })();
+    return;
   } else if (payload === "job") {
     helper.intentResponse(payload, null, null, null, sender_psid);
   } else {
@@ -151,6 +162,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
     };
   }
 
+  console.log(response);
   // Send the message to acknowledge the postback
   exports.callSendAPI(sender_psid, response);
 };

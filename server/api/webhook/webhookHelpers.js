@@ -75,8 +75,10 @@ exports.intentResponse = function(type, conf, userInfo, greet, psid) {
     response = this.callBtnResponse(
       "Need further assistance? Talk to a representive",
       "Call representitive",
-      "0123213232"
+      "0123213232",
+      userInfo
     );
+    
   } else if (type === "boomerang") {
     response = this.btnListResponse(type);
   } else if (type === "blog") {
@@ -155,11 +157,10 @@ exports.sliderResponse = function(psid, category) {
   }
 };
 
-// make slide according to intent type
-exports.sliderMaker = (psid, category, url) => {
+// make slide according to Slider Response
+exports.sliderMaker = async(psid, category, url) => {
   let slides;
 
-  (async () => {
     try {
       var { data } = await axios.get(url);
     } catch (e) {
@@ -223,30 +224,34 @@ exports.sliderMaker = (psid, category, url) => {
     };
 
     handlers.callSendAPI(psid, response);
-  })();
 };
 
+// Generate url button
+exports.urlBtnMaker = (arr, type) => {
+  let btnList = arr.map(el => {
+    let { url, title } = el;
+    return {
+      title,
+      url,
+      type
+    }
+  });
+
+  return btnList;
+};
+
+
+// Generate a custom response according to the jobs rest api from wordpress.
 exports.jobResponse = async function(psid) {
   let response, buttons, text;
 
-  const defaultBtn = [{
-    type: "web_url",
-    url: "https://www.boomerangbd.com/drop-your-cv/",
-    title: "Drop Your CV"
-  }]
-
-  const btnMaker = arr => {
-    let btnList = arr.map(el => {
-      let { url, title } = el;
-      return {
-        type: "web_url",
-        url,
-        title
-      }
-    });
-
-    return btnList;
-  }
+  const dropCvBtn = [
+    {
+      type: "web_url",
+      url: "https://www.boomerangbd.com/drop-your-cv/",
+      title: "Drop Your CV"
+    }
+  ];
 
   try {
     var { data } = await axios.get(
@@ -255,19 +260,21 @@ exports.jobResponse = async function(psid) {
 
     let jobs = data.filter(el => el.title !== "Apply Now");
 
-    if ( jobs.length > 0) {
-      let jobBtns = btnMaker(jobs);
-      buttons = [...jobBtns, ...defaultBtn];
-      text = `There's ${  jobs.length > 0 ? jobs.length : 'no'   } ${ jobs.length > 1 ? 'vacanvies': 'vacancy' } availble. If you don't find the appropriate position on the vacancy you can still apply with drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`
+    if (jobs.length > 0) {
+      let jobBtns = this.urlBtnMaker(jobs, "web_url");
+      buttons = [...jobBtns, ...dropCvBtn];
+      text = `There's ${jobs.length > 0 ? jobs.length : "no"} ${
+        jobs.length > 1 ? "vacanvies" : "vacancy"
+      } availble. If you don't find the appropriate position on the vacancy you can still apply with drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`;
     } else {
-      text = `There's no job oppenings availble currently but you can still drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`
-      buttons = [...defaultBtn];
+      text = `There's no job oppenings availble currently but you can still drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`;
+      buttons = [...dropCvBtn];
     }
 
     response = {
-      attachment:{
+      attachment: {
         type: "template",
-        payload:{
+        payload: {
           template_type: "button",
           text,
           buttons
@@ -276,17 +283,18 @@ exports.jobResponse = async function(psid) {
     };
 
     handlers.callSendAPI(psid, response);
-
   } catch (e) {
     console.log(e);
   }
-
 };
 
 // Call Button Response
-exports.callBtnResponse = function(text, title, payload) {
+exports.callBtnResponse = function(text, title, payload, uInfo) {
   let response;
+  
+  console.log(uInfo);
 
+  
   response = {
     attachment: {
       type: "template",
@@ -309,162 +317,29 @@ exports.callBtnResponse = function(text, title, payload) {
 
 // List of button response(goes to postback in handlers)
 exports.btnListResponse = function(type) {
-  let response;
+  let response, elements;
+
+  // get the static list from service module
+  const { portfolioBtnList, servicesBtnList, boomerangBtnList } = require("../../services/services.js");
 
   if (type === "services") {
-    response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "Marketing",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Marketing",
-                  payload: "marketing"
-                },
-                {
-                  type: "postback",
-                  title: "Video Prduction",
-                  payload: "vidProd"
-                },
-                {
-                  type: "postback",
-                  title: "Branding",
-                  payload: "branding"
-                }
-              ]
-            },
-            {
-              title: "Tech",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Mobile App and Web Development",
-                  payload: "mobWebDev"
-                },
-                {
-                  type: "postback",
-                  title: "UX / UI Design",
-                  payload: "uxUi"
-                },
-                {
-                  type: "postback",
-                  title: "Content",
-                  payload: "content"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    };
+    elements = servicesBtnList
   } else if (type === "portfolio") {
-    response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "Digital Marketing",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Digital Marketing",
-                  payload: "marketing-portfolio"
-                },
-                {
-                  type: "postback",
-                  title: "Video Production",
-                  payload: "vidProd-portolio"
-                },
-                {
-                  type: "postback",
-                  title: "Branding",
-                  payload: "branding-portfolio"
-                }
-              ]
-            },
-            {
-              title: "Tech",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Mobile App and Web Development / Design",
-                  payload: "mobWebDev-portfolio"
-                },
-                {
-                  type: "postback",
-                  title: "Case Studies",
-                  payload: "case-portfolio"
-                },
-                {
-                  type: "web_url",
-                  url: "https://www.boomerangbd.com/our-work/all/",
-                  title: "View All"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    };
+    elements = portfolioBtnList;
   } else if (type === "boomerang") {
-    response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "Click on the section you would like to know more about",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Our Services",
-                  payload: "services"
-                },
-                {
-                  type: "postback",
-                  title: "Our Portfolio",
-                  payload: "portfolio"
-                },
-                {
-                  type: "postback",
-                  title: "Our Clients",
-                  payload: "clients"
-                }
-              ]
-            },
-            {
-              title: "Click on the section you would like to know more about",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Available Jobs",
-                  payload: "job"
-                },
-                {
-                  type: "postback",
-                  title: "Need Assistance?",
-                  payload: "assistance"
-                },
-                {
-                  type: "web_url",
-                  url: "https://www.boomerangbd.com",
-                  title: "Visit Our Site"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    };
+    elements = boomerangBtnList
   }
 
+  response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements
+      }
+    }
+  };
+
   return response;
+
 };
