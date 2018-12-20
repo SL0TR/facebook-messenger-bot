@@ -75,8 +75,7 @@ exports.intentResponse = function(type, conf, userInfo, greet, psid) {
     response = this.callBtnResponse(
       "Need further assistance? Talk to a representive",
       "Call representitive",
-      "0123213232",
-      userInfo
+      "0123213232"
     );
     
   } else if (type === "boomerang") {
@@ -289,11 +288,12 @@ exports.jobResponse = async function(psid) {
 };
 
 // Call Button Response
-exports.callBtnResponse = function(text, title, payload, uInfo) {
+exports.callBtnResponse = function(text, title, payload) {
   let response;
-  
-  console.log(uInfo);
+  const moment = require('moment');
 
+  var time = moment().utcOffset('+0600').format('hh');
+  console.log(time);
   
   response = {
     attachment: {

@@ -148,12 +148,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "clients") {
     response = helper.intentResponse(payload);
   } else if (payload === "assistance") {
-    (async() => {
-      let uInfo = await this.getUserInfo(sender_psid);
-      response = helper.intentResponse(payload, null, uInfo);
-      exports.callSendAPI(sender_psid, response);
-    })();
-    return;
+      response = helper.intentResponse(payload);
   } else if (payload === "job") {
     helper.intentResponse(payload, null, null, null, sender_psid);
   } else {
@@ -162,7 +157,6 @@ exports.handlePostback = function(sender_psid, received_postback) {
     };
   }
 
-  console.log(response);
   // Send the message to acknowledge the postback
   exports.callSendAPI(sender_psid, response);
 };
