@@ -261,7 +261,7 @@ exports.jobResponse = async function(psid) {
       let jobBtns = this.urlBtnMaker(jobs, "web_url");
       buttons = [...jobBtns, ...dropCvBtn];
       text = `There's ${jobs.length > 0 ? jobs.length : "no"} ${
-        jobs.length > 1 ? "vacanvies" : "vacancy"
+        jobs.length > 1 ? "vacancies" : "vacancy"
       } availble. If you don't find the appropriate position on the vacancy you can still apply with drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`;
     } else {
       text = `There's no job oppenings availble currently but you can still drop your CV/Resume by clicking 'Drop Your CV' at the bottom.`;

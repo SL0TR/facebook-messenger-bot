@@ -55,6 +55,7 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
       intent = received_message.nlp.entities.intent[0].value;
       confidence = received_message.nlp.entities.intent[0].confidence;
 
+      // cut in the middle inside nlp detection to send two responses
       if (intent === "boomerang") {
         response = helper.urlButtonResponse(
           "We are a creative marketing agency who create practical, relevant and effective solutions for your business",
@@ -78,7 +79,6 @@ exports.handleMessage = function(sender_psid, received_message, user_info) {
         null,
         sender_psid
       );
-      console.log(response);
     } else if (received_message.nlp.entities.greetings) {
       let greeting = received_message.nlp.entities.greetings[0].value;
       confidence = received_message.nlp.entities.greetings[0].confidence;
