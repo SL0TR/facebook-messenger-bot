@@ -290,27 +290,49 @@ exports.jobResponse = async function(psid) {
 // Call Button Response
 exports.callBtnResponse = function(text, title, payload) {
   let response;
-  const moment = require('moment');
 
-  var time = moment().utcOffset('+0600').format('hh');
-  console.log(time);
-  
-  response = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "button",
-        text,
-        buttons: [
-          {
-            type: "phone_number",
-            title,
-            payload
-          }
-        ]
+  // Get time for UTC +6.0 timezone.
+  let time =  (function calcTime(offset) {
+    // create Date object for current location
+    var d = new Date();
+
+    // convert to msec
+    // subtract local time zone offset
+    // get UTC time in msec
+    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+    // create new Date object for different city
+    // using supplied offset
+    var nd = new Date(utc + (3600000*offset));
+
+    // return time as a string
+    return nd.getHours();
+  })('+6.0');
+
+  let workTime  = time >= 11 && time <= 19 ? true : false;
+
+  if ( workTime ) {
+    response = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text,
+          buttons: [
+            {
+              type: "phone_number",
+              title,
+              payload
+            }
+          ]
+        }
       }
+    };
+  } else {
+    response = {
+      text: `Our office is currently closed but you can drop your number here and we'll get back to you when it resumes.`
     }
-  };
+  }
 
   return response;
 };
