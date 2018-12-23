@@ -148,7 +148,7 @@ exports.handlePostback = function(sender_psid, received_postback) {
   } else if (payload === "clients") {
     response = helper.intentResponse(payload);
   } else if (payload === "assistance") {
-      response = helper.intentResponse(payload);
+    response = helper.intentResponse(payload);
   } else if (payload === "job") {
     helper.intentResponse(payload, null, null, null, sender_psid);
   } else {

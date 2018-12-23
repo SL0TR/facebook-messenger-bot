@@ -77,7 +77,6 @@ exports.intentResponse = function(type, conf, userInfo, greet, psid) {
       "Call representitive",
       "0123213232"
     );
-    
   } else if (type === "boomerang") {
     response = this.btnListResponse(type);
   } else if (type === "blog") {
@@ -157,72 +156,72 @@ exports.sliderResponse = function(psid, category) {
 };
 
 // make slide according to Slider Response
-exports.sliderMaker = async(psid, category, url) => {
+exports.sliderMaker = async (psid, category, url) => {
   let slides;
 
-    try {
-      var { data } = await axios.get(url);
-    } catch (e) {
-      console.log(e);
+  try {
+    var { data } = await axios.get(url);
+  } catch (e) {
+    console.log(e);
+  }
+
+  if (category === "marketing-portfolio") {
+    slides = data.filter(el => el.cat === "Digital Marketing");
+  } else if (category === "vidProd-portolio") {
+    slides = data.filter(el => el.cat === "Video &amp; Photography");
+  } else if (category === "mobWebDev-portfolio") {
+    slides = data.filter(el => el.cat === "Web &amp; Mobile Apps");
+  } else if (category === "case-portfolio") {
+    slides = data.filter(el => el.cat === "Case Studies");
+  } else if (category === "branding-portfolio") {
+    slides = data.filter(el => el.cat === "Branding &amp; Print");
+  } else if (category === "clients") {
+    slides = data;
+  }
+
+  let elements = slides.map(el => {
+    let { title, img: image_url, url, subtitle } = el;
+
+    if (title.search("&#8217;") > -1) {
+      title = title = title.replace("&#8217;", "'");
+    } else if (title.search("&#038;") > -1) {
+      title = title.replace("&#038;", "&");
     }
 
-    if (category === "marketing-portfolio") {
-      slides = data.filter(el => el.cat === "Digital Marketing");
-    } else if (category === "vidProd-portolio") {
-      slides = data.filter(el => el.cat === "Video &amp; Photography");
-    } else if (category === "mobWebDev-portfolio") {
-      slides = data.filter(el => el.cat === "Web &amp; Mobile Apps");
-    } else if (category === "case-portfolio") {
-      slides = data.filter(el => el.cat === "Case Studies");
-    } else if (category === "branding-portfolio") {
-      slides = data.filter(el => el.cat === "Branding &amp; Print");
-    } else if (category === "clients") {
-      slides = data;
-    }
-
-    let elements = slides.map(el => {
-      let { title, img: image_url, url, subtitle } = el;
-
-      if (title.search("&#8217;") > -1) {
-        title = title = title.replace("&#8217;", "'");
-      } else if (title.search("&#038;") > -1) {
-        title = title.replace("&#038;", "&");
-      }
-
-      return {
-        title,
-        image_url,
-        subtitle: subtitle || "Boomerang Digital Clients",
-        default_action: {
+    return {
+      title,
+      image_url,
+      subtitle: subtitle || "Boomerang Digital Clients",
+      default_action: {
+        type: "web_url",
+        url: url || "https://www.boomerangbd.com"
+      },
+      buttons: [
+        {
           type: "web_url",
-          url: url || "https://www.boomerangbd.com"
+          url: url || "https://www.boomerangbd.com",
+          title: "View Details"
         },
-        buttons: [
-          {
-            type: "web_url",
-            url: url || "https://www.boomerangbd.com",
-            title: "View Details"
-          },
-          {
-            type: "postback",
-            title: "Go back to portfolio",
-            payload: "portfolio"
-          }
-        ]
-      };
-    });
-
-    let response = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements
+        {
+          type: "postback",
+          title: "Go back to portfolio",
+          payload: "portfolio"
         }
-      }
+      ]
     };
+  });
 
-    handlers.callSendAPI(psid, response);
+  let response = {
+    attachment: {
+      type: "template",
+      payload: {
+        template_type: "generic",
+        elements
+      }
+    }
+  };
+
+  handlers.callSendAPI(psid, response);
 };
 
 // Generate url button
@@ -233,12 +232,11 @@ exports.urlBtnMaker = (arr, type) => {
       title,
       url,
       type
-    }
+    };
   });
 
   return btnList;
 };
-
 
 // Generate a custom response according to the jobs rest api from wordpress.
 exports.jobResponse = async function(psid) {
@@ -291,27 +289,27 @@ exports.jobResponse = async function(psid) {
 exports.callBtnResponse = function(text, title, payload) {
   let response;
 
-  // Get time for UTC +6.0 timezone.
-  let time =  (function calcTime(offset) {
+  // Get time for UTC +6.0 timezone in 24 hour format
+  let hour = (function calcTime(offset) {
     // create Date object for current location
     var d = new Date();
 
     // convert to msec
     // subtract local time zone offset
     // get UTC time in msec
-    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    var utc = d.getTime() + d.getTimezoneOffset() * 60000;
 
     // create new Date object for different city
     // using supplied offset
-    var nd = new Date(utc + (3600000*offset));
+    var nd = new Date(utc + 3600000 * offset);
 
     // return time as a string
     return nd.getHours();
-  })('+6.0');
+  })("+6.0");
 
-  let workTime  = time >= 11 && time <= 19 ? true : false;
+  let workTime = hour >= 11 && hour <= 19 ? true : false;
 
-  if ( workTime ) {
+  if (workTime) {
     response = {
       attachment: {
         type: "template",
@@ -331,7 +329,7 @@ exports.callBtnResponse = function(text, title, payload) {
   } else {
     response = {
       text: `Our office is currently closed but you can drop your number here and we'll get back to you when it resumes.`
-    }
+    };
   }
 
   return response;
@@ -342,14 +340,18 @@ exports.btnListResponse = function(type) {
   let response, elements;
 
   // get the static list from service module
-  const { portfolioBtnList, servicesBtnList, boomerangBtnList } = require("../../services/services.js");
+  const {
+    portfolioBtnList,
+    servicesBtnList,
+    boomerangBtnList
+  } = require("../../services/services.js");
 
   if (type === "services") {
-    elements = servicesBtnList
+    elements = servicesBtnList;
   } else if (type === "portfolio") {
     elements = portfolioBtnList;
   } else if (type === "boomerang") {
-    elements = boomerangBtnList
+    elements = boomerangBtnList;
   }
 
   response = {
@@ -363,5 +365,4 @@ exports.btnListResponse = function(type) {
   };
 
   return response;
-
 };
